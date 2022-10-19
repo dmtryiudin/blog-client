@@ -18,6 +18,7 @@ const SignUpForm = () => {
     async function formSubmitHandler(e){
         e.preventDefault()
         auth.signUp(signUpData)
+        clearForm()
     }
 
     function setField(field, value){
@@ -38,8 +39,8 @@ const SignUpForm = () => {
     }
 
     return (
-        <div className="bg-neutral-100 rounded-xl w-1/2 p-2.5 border-2 border-neutral-200">
-            <form className="p-3 w-4/5 space-y-8 flex flex-col" onSubmit={formSubmitHandler}>
+        <div className="bg-neutral-100 rounded-3xl">
+            <form className="w-4/5 space-y-8 flex flex-col" onSubmit={formSubmitHandler}>
                 <InputWithCaption
                     caption="Email"
                     type="email"
