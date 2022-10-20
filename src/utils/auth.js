@@ -6,18 +6,17 @@ export const auth = {
     async login(authData){
         try {
             const response = await axios.post(`${URL}/auth`, authData)
-
             const token = response.data.token
 
-            const config = {
-                headers: { Authorization: `Bearer ${token}` }
-            };
+            localStorage.removeItem('token')
+            localStorage.setItem('token', JSON.stringify(token));
 
-            const userFetchData = await axios.get(`${URL}/auth/user`, config)
-            return {
-                error:false,
-                data: response.data
+            const userData = await this.getDataByToken()
+
+            if(!userData?.error){
+                window.location = "/";
             }
+
         }
         catch (err){
             return {
@@ -27,26 +26,41 @@ export const auth = {
         }
     },
 
+    async getDataByToken(){
+        const token = localStorage.getItem('token')
+        try{
+            const config = {
+                headers: { Authorization: `Bearer ${token}` }
+            };
+
+            const userFetchData = await axios.get(`${URL}/auth/user`, config)
+            return {
+                error:false,
+                data: userFetchData.data
+            }
+        }
+        catch (err){
+            localStorage.removeItem('token')
+        }
+    },
+
     async signUp(signUpData){
         try{
             const response = await axios.post(`${URL}/users`, signUpData)
 
-            if(response.data.error){
-                return {
-                    error:true,
-                    data: response.data
-                }
+            return {
+                error:false,
+                data: response.data
             }
 
-            else{
-                return {
-                    error:false,
-                    data: response.data
-                }
-            }
         }
         catch (err){
-            console.log('Error', err)
+            return {
+                error:true,
+                data: err.response.data.error[0].message || err.response.data.error
+            }
         }
-    }
+    },
+
+
 }

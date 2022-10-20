@@ -22,8 +22,7 @@ const SignUpForm = (props) => {
 
         if(res?.error){
             props.setIsError(true)
-            props.setErrorMessage(res.data.error)
-            console.log(res.data.error)
+            props.setErrorMessage(res.data)
         }
     }
 

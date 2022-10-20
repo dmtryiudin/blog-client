@@ -35,7 +35,6 @@ const AuthForm = (props) => {
         if(res?.error){
             props.setIsError(true)
             props.setErrorMessage(res.data)
-            console.log(res.data)
         }
     }
 
