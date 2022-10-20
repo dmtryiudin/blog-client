@@ -3,12 +3,15 @@ import InputWithCaption from "./InputWithCaption";
 import SubmitButton from "./SubmitButton";
 import ResetButton from "./ResetButton";
 import {auth} from "../utils/auth";
+import {useDispatch} from "react-redux";
 
 const AuthForm = (props) => {
     const [authData, setAuthData] = useState({
         email: "",
         password: ""
     })
+
+    const dispatch = useDispatch()
 
     function setEmail(e){
         setAuthData({...authData, email: e.target.value})
@@ -35,6 +38,11 @@ const AuthForm = (props) => {
         if(res?.error){
             props.setIsError(true)
             props.setErrorMessage(res.data)
+        }
+
+        else{
+            console.log(res.data)
+            dispatch({type:"LOGIN", payload:res.data})
         }
     }
 

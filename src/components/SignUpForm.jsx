@@ -24,6 +24,10 @@ const SignUpForm = (props) => {
             props.setIsError(true)
             props.setErrorMessage(res.data)
         }
+
+        else {
+            window.location = '/auth/signin'
+        }
     }
 
     function setField(field, value){

@@ -1,12 +1,14 @@
 import AuthForm from "../components/AuthForm";
 import SignUpForm from "../components/SignUpForm";
-import {Link, Navigate, redirect, Route, Routes} from "react-router-dom";
+import {Link, Navigate, Route, Routes} from "react-router-dom";
 import ErrorMessage from "../components/ErrorMessage";
 import {useState} from "react";
 
 const Auth = () => {
     const [isError, setIsError] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
+
+
 
     return (
         <div className="bg-neutral-100 rounded-3xl w-1/2 mx-auto border-gray-200 border-4 p-7 my-14">

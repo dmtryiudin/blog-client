@@ -2,6 +2,7 @@ import axios from "axios";
 
 export const URL = 'http://test-blog-api.ficuslife.com/api/v1'
 
+
 export const auth = {
     async login(authData){
         try {
@@ -11,11 +12,14 @@ export const auth = {
             localStorage.removeItem('token')
             localStorage.setItem('token', JSON.stringify(token));
 
+
             const userData = await this.getDataByToken()
 
             if(!userData?.error){
                 window.location = "/";
             }
+
+            return userData
 
         }
         catch (err){
@@ -27,7 +31,7 @@ export const auth = {
     },
 
     async getDataByToken(){
-        const token = localStorage.getItem('token')
+        const token = JSON.parse(localStorage.getItem('token'))
         try{
             const config = {
                 headers: { Authorization: `Bearer ${token}` }
@@ -40,7 +44,13 @@ export const auth = {
             }
         }
         catch (err){
+            console.log('invalid token')
             localStorage.removeItem('token')
+
+            return {
+                error:true,
+                data:err.response.data.error[0].message || err.response.data.error
+            }
         }
     },
 

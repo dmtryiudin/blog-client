@@ -4,6 +4,7 @@ import Auth from "./pages/Auth";
 import Layout from "./pages/Layout";
 import NotFound from "./pages/NotFound";
 
+
 function App() {
   return (
       <BrowserRouter>
