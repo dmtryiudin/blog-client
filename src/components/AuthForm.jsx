@@ -4,7 +4,7 @@ import SubmitButton from "./SubmitButton";
 import ResetButton from "./ResetButton";
 import {auth} from "../utils/auth";
 
-const AuthForm = () => {
+const AuthForm = (props) => {
     const [authData, setAuthData] = useState({
         email: "",
         password: ""
@@ -29,9 +29,14 @@ const AuthForm = () => {
     async function formSubmitHandler(e){
         e.preventDefault()
 
-        await auth.login(authData)
+        const res = await auth.login(authData)
         clearForm()
 
+        if(res?.error){
+            props.setIsError(true)
+            props.setErrorMessage(res.data)
+            console.log(res.data)
+        }
     }
 
     return (

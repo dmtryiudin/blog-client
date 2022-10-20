@@ -7,23 +7,23 @@ export const auth = {
         try {
             const response = await axios.post(`${URL}/auth`, authData)
 
-            if(response.data.error){
-                console.log(response.data)
-            }
+            const token = response.data.token
 
-            else{
-                const token = response.data.token
+            const config = {
+                headers: { Authorization: `Bearer ${token}` }
+            };
 
-                const config = {
-                    headers: { Authorization: `Bearer ${token}` }
-                };
-
-                const userFetchData = await axios.get(`${URL}/auth/user`, config)
-                console.log(userFetchData.data)
+            const userFetchData = await axios.get(`${URL}/auth/user`, config)
+            return {
+                error:false,
+                data: response.data
             }
         }
         catch (err){
-            console.log('Error: ', JSON.stringify(err))
+            return {
+                error:true,
+                data: err.response.data.error[0].message || err.response.data.error
+            }
         }
     },
 
@@ -32,11 +32,17 @@ export const auth = {
             const response = await axios.post(`${URL}/users`, signUpData)
 
             if(response.data.error){
-                console.log(response.data.error)
+                return {
+                    error:true,
+                    data: response.data
+                }
             }
 
             else{
-                console.log(response.data)
+                return {
+                    error:false,
+                    data: response.data
+                }
             }
         }
         catch (err){

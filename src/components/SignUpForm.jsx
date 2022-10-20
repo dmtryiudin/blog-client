@@ -4,7 +4,7 @@ import SubmitButton from "./SubmitButton";
 import ResetButton from "./ResetButton";
 import {useEffect, useState} from "react";
 
-const SignUpForm = () => {
+const SignUpForm = (props) => {
     const [signUpData, setSignUpData] = useState({
         email: "",
         password: "",
@@ -17,8 +17,14 @@ const SignUpForm = () => {
 
     async function formSubmitHandler(e){
         e.preventDefault()
-        auth.signUp(signUpData)
+        const res = await auth.signUp(signUpData)
         clearForm()
+
+        if(res?.error){
+            props.setIsError(true)
+            props.setErrorMessage(res.data.error)
+            console.log(res.data.error)
+        }
     }
 
     function setField(field, value){

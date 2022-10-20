@@ -1,6 +1,4 @@
 import  './css/main.css'
-import AuthForm from "./components/AuthForm";
-import SignUpForm from "./components/SignUpForm";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Auth from "./pages/Auth";
 import Layout from "./pages/Layout";
