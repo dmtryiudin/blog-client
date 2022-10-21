@@ -13,11 +13,15 @@ const defaultState = {
     }
 }
 
-export const reducer = (state = defaultState, action) => {
+const LOGIN = 'LOGIN'
+const LOGOUT = 'LOGOUT'
+const SET_USER_DATA = 'SET_USER_DATA'
+
+export const authReducer = (state = defaultState, action) => {
     switch (action.type) {
-        case 'LOGIN':
+        case LOGIN:
             return {...state, isAuth: true, fetchUserData: action.payload}
-        case 'LOGOUT':
+        case LOGOUT:
             return {
                 ...state,
                 isAuth: false,
@@ -33,7 +37,7 @@ export const reducer = (state = defaultState, action) => {
                     dateCreated: ""
                 }
             }
-        case 'SET_USER_DATA':
+        case SET_USER_DATA:
             return {...state, fetchUserData: action.payload}
         default:
             return state

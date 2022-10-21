@@ -71,6 +71,10 @@ export const auth = {
             }
         }
     },
-
+    logout(){
+        localStorage.removeItem('persist:store')
+        localStorage.removeItem('token')
+        window.location.reload();
+    }
 
 }
