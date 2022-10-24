@@ -2,7 +2,7 @@ import InputWithCaption from "../components/InputWithCaption";
 import {useDispatch, useSelector} from "react-redux";
 import SubmitButton from "../components/SubmitButton";
 import ResetButton from "../components/ResetButton";
-import {setUser} from "../utils/setUser";
+import {getSetUser} from "../utils/getSetUser";
 import {auth} from "../utils/auth";
 import {useState} from "react";
 
@@ -41,10 +41,10 @@ const ProfileSettings = () => {
         e.preventDefault()
         console.log(avatar)
         if(avatar){
-            await setUser.updateAvatar(authData.fetchUserData._id, avatar)
+            await getSetUser.updateAvatar(authData.fetchUserData._id, avatar)
             dispath({type: 'SET_USER_DATA', payload:(await auth.getDataByToken()).data})
         }
-            await setUser.updateUserData(authData.fetchUserData._id, newData)
+            await getSetUser.updateUserData(authData.fetchUserData._id, newData)
             dispath({type: 'SET_USER_DATA', payload:(await auth.getDataByToken()).data})
 
     }
@@ -98,7 +98,7 @@ const ProfileSettings = () => {
             </div>
             <button
                 className="bg-red-500 w-full h-10 rounded font-sans font-normal text-md text-white cursor-pointer"
-                onClick={()=>setUser.deleteUser(authData.fetchUserData._id)}
+                onClick={()=>getSetUser.deleteUser(authData.fetchUserData._id)}
             >
                 Delete user
             </button>

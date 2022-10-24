@@ -4,6 +4,8 @@ import Auth from "./pages/Auth";
 import Layout from "./pages/Layout";
 import NotFound from "./pages/NotFound";
 import {useSelector} from "react-redux";
+import MainPage from "./pages/MainPage";
+import Profile from "./pages/Profile";
 import ProfileSettings from "./pages/ProfileSettings";
 
 
@@ -17,9 +19,11 @@ function App() {
                   auth.isAuth ?
                       (
                           <Route path="/" element={ <Layout /> }>
-                            <Route path="/auth/*" element={ <Auth/> } />
-                            <Route path="/profile-settings" element={<ProfileSettings />}/>
-                            <Route path="*" element={<NotFound />} />
+                                <Route path="/" element={<MainPage />} />
+                                <Route path="/auth/*" element={ <Auth/> } />
+                                <Route path="/profile/:id" element={<Profile />}/>
+                                <Route element={<ProfileSettings />} path="/settings"/>
+                                <Route path="*" element={<NotFound />} />
                           </Route>
                       ) :
                       (

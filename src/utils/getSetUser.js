@@ -4,7 +4,7 @@ import {auth} from "./auth";
 export const URL = 'http://test-blog-api.ficuslife.com/api/v1'
 
 
-export const setUser = {
+export const getSetUser = {
     async deleteUser(id){
         try{
             const token = JSON.parse(localStorage.getItem('token'))
@@ -44,5 +44,23 @@ export const setUser = {
         };
 
         await axios.patch(`${URL}/users/${id}`, data, config)
+    },
+
+    async getUserById(id){
+        try {
+            return (await axios.get(`${URL}/users/${id}`)).data
+        }
+        catch (err){
+            return null
+        }
+    },
+
+    async getAllUsers(){
+        try {
+            return (await axios.get(`${URL}/users/?limit=999999999999999999999999999`)).data
+        }
+        catch (err){
+            return null
+        }
     }
 }
