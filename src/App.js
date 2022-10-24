@@ -7,6 +7,7 @@ import {useSelector} from "react-redux";
 import MainPage from "./pages/MainPage";
 import Profile from "./pages/Profile";
 import ProfileSettings from "./pages/ProfileSettings";
+import Post from "./pages/Post";
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
                                 <Route path="/" element={<MainPage />} />
                                 <Route path="/auth/*" element={ <Auth/> } />
                                 <Route path="/profile/:id" element={<Profile />}/>
+                                <Route path="/post/:id" element={<Post />} />
                                 <Route element={<ProfileSettings />} path="/settings"/>
                                 <Route path="*" element={<NotFound />} />
                           </Route>

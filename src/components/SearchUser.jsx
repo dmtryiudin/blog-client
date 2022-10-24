@@ -1,6 +1,6 @@
-import InputComponent from "./InputComponent";
 import {getSetUser} from "../utils/getSetUser";
 import {useEffect, useState} from "react";
+import InputWithCaption from "./InputWithCaption";
 
 const SearchUser = () => {
     const [allUsers, setAllUsers] = useState(null)
@@ -21,7 +21,8 @@ const SearchUser = () => {
 
     return (
         <div className="bg-neutral-100 rounded-3xl border-gray-200 border-4 p-2 relative">
-            <InputComponent
+            <InputWithCaption
+                caption="Search user"
                 changeHandler={(e)=>setSearchString(e.target.value)}
                 inputValue={searchString}
                 type="text"
