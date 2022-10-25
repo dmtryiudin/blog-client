@@ -56,11 +56,9 @@ const ProfileSettings = () => {
     return (
         <form
             onSubmit={e=>sendForm(e)}
-            className="bg-neutral-100 rounded-3xl w-1/2 mx-auto border-gray-200 border-4 p-7 my-14 w-4/5 space-y-8 flex flex-col">
-            <div className="relative overflow-hidden flex space-y-5 flex-col">
-                <div>
-                    <input type="file" onChange={e=>changeAvatarHandler(e)} accept="image/*" />
-                </div>
+            className="bg-neutral-100 rounded-3xl mx-auto border-gray-200 border-4 p-7 my-14 w-4/5 space-y-8 flex flex-col">
+            <div>
+                <input type="file" onChange={e=>changeAvatarHandler(e)} accept="image/*" />
             </div>
             <InputWithCaption
                 caption="Name"

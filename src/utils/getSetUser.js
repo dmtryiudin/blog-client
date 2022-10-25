@@ -2,12 +2,12 @@ import axios from "axios";
 import {auth} from "./auth";
 
 export const URL = 'http://test-blog-api.ficuslife.com/api/v1'
+const token = JSON.parse(localStorage.getItem('token'))
 
 
 export const getSetUser = {
     async deleteUser(id){
         try{
-            const token = JSON.parse(localStorage.getItem('token'))
             const config = {
                 headers: { Authorization: `Bearer ${token}` }
             };
@@ -22,7 +22,6 @@ export const getSetUser = {
 
     async updateAvatar(id, avatar){
         try{
-            const token = JSON.parse(localStorage.getItem('token'))
             const config = {
                 headers: { Authorization: `Bearer ${token}` },
             };
@@ -38,7 +37,6 @@ export const getSetUser = {
     },
 
     async updateUserData(id, data){
-        const token = JSON.parse(localStorage.getItem('token'))
         const config = {
             headers: { Authorization: `Bearer ${token}` },
         };

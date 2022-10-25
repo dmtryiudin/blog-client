@@ -12,10 +12,6 @@ const MainPage = () => {
     const [paginationValue, setPaginationValue] = useState(0)
     const [paginationLimit, setPaginationLimit] = useState(0)
 
-    function paginationHandler(val){
-        setPaginationValue(val)
-    }
-
     useEffect(()=>{
         posts.getPostsWithPagination(paginationValue, postFilter)
             .then((e)=>{
@@ -24,6 +20,14 @@ const MainPage = () => {
             })
     }, [paginationValue, postFilter])
 
+    function paginationHandler(val){
+        setPaginationValue(val)
+    }
+
+    function setPostFilterHandler(e){
+        setPostFilter(e)
+    }
+
     return (
         <div className="space-y-10 py-8">
             <SearchUser />
@@ -31,7 +35,7 @@ const MainPage = () => {
                 <InputWithCaption
                     caption="Search post"
                     inputValue={postFilter}
-                    changeHandler={e=>setPostFilter(e.target.value)}
+                    changeHandler={e=>setPostFilterHandler(e.target.value)}
                 />
             </div>
             <div className="flex flex-wrap justify-between space-y-12">
