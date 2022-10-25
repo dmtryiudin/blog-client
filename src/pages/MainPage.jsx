@@ -20,12 +20,9 @@ const MainPage = () => {
             })
     }, [paginationValue, postFilter])
 
-    function paginationHandler(val){
-        setPaginationValue(val)
-    }
-
     function setPostFilterHandler(e){
         setPostFilter(e)
+        setPaginationValue(0)
     }
 
     return (
@@ -44,7 +41,7 @@ const MainPage = () => {
                     return <PostPreview title={e.title} img={e.image} id={e._id}/>
                 })}
             </div>
-            <Pagination limit={10} handler={paginationHandler} itemsCount={paginationLimit}/>
+            <Pagination limit={10} itemsCount={paginationLimit} value={paginationValue} setValue={setPaginationValue}/>
         </div>
     )
 }

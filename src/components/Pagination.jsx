@@ -1,25 +1,17 @@
-import {useEffect, useState} from "react";
-
 const Pagination = (props) => {
-    const [page, setPage] = useState(0)
-
-    useEffect(()=>{
-        props.handler(page)
-    }, [page])
-
     function nextPage(){
-        setPage(page+props.limit)
+        props.setValue(props.value+props.limit)
     }
 
     function prevPage(){
-        setPage(page-props.limit)
+        props.setValue(props.value-props.limit)
     }
 
     return (
         <div className="flex justify-between">
-            <button disabled={!page} onClick={prevPage}>{'<---Previous'}</button>
-            {page + '-' + (page + props.limit)}
-            <button disabled={page + props.limit >= props.itemsCount} onClick={nextPage}>{'Next--->'}</button>
+            <button disabled={!props.value} onClick={prevPage}>{'<---Previous'}</button>
+            {props.value + '-' + (props.value + props.limit)}
+            <button disabled={props.value + props.limit >= props.itemsCount} onClick={nextPage}>{'Next--->'}</button>
         </div>
     )
 }
