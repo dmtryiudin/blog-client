@@ -48,19 +48,19 @@ const CreatePost = () => {
                 </div>
                 <InputWithCaption
                     type="text"
-                    value={postData.title}
+                    inputValue={postData.title}
                     caption="Title"
                     changeHandler={e=>setPostData({...postData, title: e.target.value})}
                 />
                 <InputWithCaption
                     type="text"
-                    value={postData.fullText}
+                    inputValue={postData.fullText}
                     caption="Full text"
                     changeHandler={e=>setPostData({...postData, fullText: e.target.value})}
                 />
                 <InputWithCaption
                     type="text"
-                    value={postData.description}
+                    inputValue={postData.description}
                     caption="Description"
                     changeHandler={e=>setPostData({...postData, description: e.target.value})}
                 />

@@ -75,5 +75,50 @@ export const posts = {
             }
         }
 
+    },
+    async updatePost(id, data){
+        try {
+            const config = {
+                headers: { Authorization: `Bearer ${token}` },
+            };
+
+            const fetchData = await axios.patch(`${URL}/posts/${id}`, data, config)
+            return {
+                error: false,
+                data: fetchData.data
+            }
+        }
+        catch (err){
+            return {
+                error: true,
+                data: err.response.data.error[0].message || err.response.data.error
+            }
+        }
+    },
+
+    async deletePost(id){
+        try {
+            const config = {
+                headers: { Authorization: `Bearer ${token}` },
+            };
+
+            await axios.delete(`${URL}/posts/${id}`, config)
+        }
+        catch (err){
+            return null
+        }
+    },
+
+    async addLike(postId){
+        try {
+            const config = {
+                headers: { Authorization: `Bearer ${token}` },
+            };
+
+            await axios.put(`${URL}/posts/like/${postId}`, {}, config)
+        }
+        catch (err){
+            return null
+        }
     }
 }

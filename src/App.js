@@ -9,16 +9,33 @@ import Profile from "./pages/Profile";
 import ProfileSettings from "./pages/ProfileSettings";
 import Post from "./pages/Post";
 import CreatePost from "./pages/CreatePost";
+import UpdatePost from "./pages/UpdatePost";
+import {useEffect} from "react";
+import {auth} from "./utils/auth";
 
 
 function App() {
-    const auth = useSelector(state => state.auth)
+    const authData = useSelector(state => state.auth)
+
+    useEffect(()=>{
+       if(authData.isAuth){
+           auth.getDataByToken()
+               .then((res)=>{
+                   console.log(res)
+                   if(res.error){
+                       console.log('logoutttt')
+                       auth.logout()
+                   }
+               })
+       }
+
+    }, [])
 
   return (
       <BrowserRouter>
           <Routes>
               {
-                  auth.isAuth ?
+                  authData.isAuth ?
                       (
                           <Route path="/" element={ <Layout /> }>
                               <Route path="/" element={<MainPage />} />
@@ -27,11 +44,13 @@ function App() {
                               <Route path="/post/:id" element={<Post />} />
                               <Route element={<ProfileSettings />} path="/profile-settings"/>
                               <Route path="/create-post" element={<CreatePost />} />
+                              <Route path="/update-post/:id" element={<UpdatePost />} />
                               <Route path="*" element={<NotFound />} />
                           </Route>
                       ) :
                       (
                           <Route path="/" element={ <Layout /> }>
+                              <Route path="/" element={<MainPage />} />
                               <Route path="/auth/*" element={ <Auth/> } />
                               <Route path="*" element={<Navigate to="/auth/*" replace />} />
                           </Route>
