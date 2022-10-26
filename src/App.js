@@ -42,7 +42,7 @@ function App() {
                               <Route path="/auth/*" element={ <Auth/> } />
                               <Route path="/profile/:id" element={<Profile />}/>
                               <Route path="/post/:id" element={<Post />} />
-                              <Route element={<ProfileSettings />} path="/profile-settings"/>
+                              <Route path="/profile-settings" element={<ProfileSettings />}  />
                               <Route path="/create-post" element={<CreatePost />} />
                               <Route path="/update-post/:id" element={<UpdatePost />} />
                               <Route path="*" element={<NotFound />} />

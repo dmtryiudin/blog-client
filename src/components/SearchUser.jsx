@@ -20,7 +20,7 @@ const SearchUser = () => {
     )
 
     return (
-        <div className="bg-neutral-100 rounded-3xl border-gray-200 border-4 p-2 relative">
+        <div className="bg-neutral-100 rounded-3xl border-gray-200 border-4 p-2">
             <InputWithCaption
                 caption="Search user"
                 changeHandler={(e)=>setSearchString(e.target.value)}
