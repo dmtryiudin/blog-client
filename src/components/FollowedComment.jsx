@@ -13,7 +13,7 @@ const FollowedComment = ({post}) => {
     }, [])
 
     return (
-        <div className="bg-neutral-100 rounded-3xl border-gray-200 border-4 p-7 my-6">
+        <div className="bg-neutral-100 rounded-3xl border-gray-200 border-4 p-7 mb-6">
             <div className="flex items-center">
                 <img src={authorData?.avatar ? ('http://test-blog-api.ficuslife.com' + authorData.avatar) : require('../img/unknown.jpg')} className="w-16 h-16 rounded-full" />
                 <a href={'/profile/' + commentedBy}>

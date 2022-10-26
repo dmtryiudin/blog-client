@@ -7,6 +7,7 @@ import CommentsList from "../components/CommentsList";
 import Modal from "../components/Modal";
 import EditComment from "../components/EditComment";
 import {comments} from "../utils/comments";
+import SubmitRemoval from "../components/SubmitRemoval";
 
 const Post = () => {
     const [postData, setPostData] = useState(null)
@@ -15,8 +16,8 @@ const Post = () => {
     const [showModal, setShowModal] = useState(false)
     const id = useParams().id
     const state = useSelector(state => state)
-
     const [commentsList, setCommentsList] = useState(null)
+    const [showRemoveDialog, setShowRemoveDialog] = useState(false)
 
     useEffect(()=>{
        updateData()
@@ -69,6 +70,8 @@ const Post = () => {
 
     async function deletePost(){
         await posts.deletePost(id)
+        setShowRemoveDialog(false)
+        window.location="/profile/" + state.auth.fetchUserData._id
     }
 
     return (
@@ -83,6 +86,13 @@ const Post = () => {
                                 </Modal>
                             )
                         }
+                        <Modal>
+                            <SubmitRemoval
+                                isShow={showRemoveDialog}
+                                removeHandler={deletePost.bind(this)}
+                                hideModal={()=>setShowRemoveDialog(false)}
+                            />
+                        </Modal>
                         <div className="bg-neutral-100 rounded-3xl border-gray-200 border-4 p-7 my-14">
                             <div className="flex">
                                 <img className="w-96 h-96" src={postData?.image ? 'http://test-blog-api.ficuslife.com' + postData.image : require('../img/noimage.png')} />
@@ -124,7 +134,7 @@ const Post = () => {
                                         <div className="mt-5 w-44 flex justify-between">
                                             <button
                                                 className="bg-red-500 w-20 h-10 rounded font-sans font-normal text-md text-white cursor-pointer"
-                                                onClick={deletePost}
+                                                onClick={()=>setShowRemoveDialog(true)}
                                             >
                                                 Delete
                                             </button>

@@ -5,8 +5,11 @@ import ResetButton from "../components/ResetButton";
 import {getSetUser} from "../utils/getSetUser";
 import {auth} from "../utils/auth";
 import {useState} from "react";
+import Modal from "../components/Modal";
+import SubmitRemoval from "../components/SubmitRemoval";
 
 const ProfileSettings = () => {
+    const [showRemoveDialog, setShowRemoveDialog] = useState(false)
     const authData = useSelector(state => state.auth)
     const dispath = useDispatch()
 
@@ -53,54 +56,67 @@ const ProfileSettings = () => {
         setAvatar(e.target.files)
     }
 
+    async function deleteUser(){
+        await getSetUser.deleteUser(authData.fetchUserData._id)
+        setShowRemoveDialog(false)
+    }
+
     return (
-        <form
-            onSubmit={e=>sendForm(e)}
-            className="bg-neutral-100 rounded-3xl mx-auto border-gray-200 border-4 p-7 my-14 w-4/5 space-y-8 flex flex-col">
-            <div>
-                <input type="file" onChange={e=>changeAvatarHandler(e)} accept="image/*" />
-            </div>
-            <InputWithCaption
-                caption="Name"
-                changeHandler={(e)=>setField('name', e.target.value)}
-                inputValue={newData.name}
-                type="text"
-            />
-            <InputWithCaption
-                caption="Extra details"
-                changeHandler={(e)=>setField('extra_details', e.target.value)}
-                inputValue={newData.extra_details}
-                type="text"
-            />
-            <InputWithCaption
-                caption="Skills"
-                changeHandler={(e)=>setField('skills', e.target.value)}
-                inputValue={newData.skills}
-                type="text"
-            />
-            <InputWithCaption
-                caption="Profession"
-                changeHandler={(e)=>setField('profession', e.target.value)}
-                inputValue={newData.profession}
-                type="text"
-            />
-            <InputWithCaption
-                caption="Details"
-                changeHandler={(e)=>setField('details', e.target.value)}
-                inputValue={newData.details}
-                type="text"
-            />
-            <div className="w-44 flex justify-between">
-                <SubmitButton />
-                <ResetButton clickHandler={clearForm}/>
-            </div>
-            <button
-                className="bg-red-500 w-full h-10 rounded font-sans font-normal text-md text-white cursor-pointer"
-                onClick={()=>getSetUser.deleteUser(authData.fetchUserData._id)}
-            >
-                Delete user
-            </button>
-        </form>
+        <>
+            <Modal>
+                <SubmitRemoval
+                    isShow={showRemoveDialog}
+                    removeHandler={deleteUser.bind(this)}
+                    hideModal={()=>setShowRemoveDialog(false)}/>
+            </Modal>
+            <form
+                onSubmit={e=>sendForm(e)}
+                className="bg-neutral-100 rounded-3xl mx-auto border-gray-200 border-4 p-7 my-14 w-4/5 space-y-8 flex flex-col">
+                <div>
+                    <input type="file" onChange={e=>changeAvatarHandler(e)} accept="image/*" />
+                </div>
+                <InputWithCaption
+                    caption="Name"
+                    changeHandler={(e)=>setField('name', e.target.value)}
+                    inputValue={newData.name}
+                    type="text"
+                />
+                <InputWithCaption
+                    caption="Extra details"
+                    changeHandler={(e)=>setField('extra_details', e.target.value)}
+                    inputValue={newData.extra_details}
+                    type="text"
+                />
+                <InputWithCaption
+                    caption="Skills"
+                    changeHandler={(e)=>setField('skills', e.target.value)}
+                    inputValue={newData.skills}
+                    type="text"
+                />
+                <InputWithCaption
+                    caption="Profession"
+                    changeHandler={(e)=>setField('profession', e.target.value)}
+                    inputValue={newData.profession}
+                    type="text"
+                />
+                <InputWithCaption
+                    caption="Details"
+                    changeHandler={(e)=>setField('details', e.target.value)}
+                    inputValue={newData.details}
+                    type="text"
+                />
+                <div className="w-44 flex justify-between">
+                    <SubmitButton />
+                    <ResetButton clickHandler={clearForm}/>
+                </div>
+                <button
+                    className="bg-red-500 w-full h-10 rounded font-sans font-normal text-md text-white cursor-pointer"
+                    onClick={()=>setShowRemoveDialog(true)}
+                >
+                    Delete user
+                </button>
+            </form>
+        </>
     )
 }
 

@@ -5,6 +5,7 @@ import {useSelector} from "react-redux";
 import {comments} from "../utils/comments";
 import Modal from "./Modal";
 import EditComment from "./EditComment";
+import SubmitRemoval from "./SubmitRemoval";
 
 const Comment = (props) => {
     const [commentedBy, setCommentedBy] = useState(null)
@@ -12,6 +13,7 @@ const Comment = (props) => {
     const [showModal, setShowModal] = useState(false)
     const [mode, setMode] = useState('')
     const [isLike, setIsLike] = useState(false)
+    const [showRemoveDialog, setShowRemoveDialog] = useState(false)
 
     useEffect(()=>{
         getSetUser.getUserById(props.commentedBy)
@@ -39,6 +41,7 @@ const Comment = (props) => {
     async function deleteComment(){
         await comments.deleteComment(props.id)
         props.updateComments()
+        setShowRemoveDialog(false)
     }
 
     function replyComment(){
@@ -68,6 +71,13 @@ const Comment = (props) => {
                     id={props.postId}
                     followedId={props.id}
                     commentText={props.text}
+                />
+            </Modal>
+            <Modal>
+                <SubmitRemoval
+                    isShow={showRemoveDialog}
+                    removeHandler={deleteComment.bind(this)}
+                    hideModal={()=>setShowRemoveDialog(false)}
                 />
             </Modal>
             <div className="bg-neutral-100 rounded-3xl border-gray-200 border-4 p-7 my-6">
@@ -103,7 +113,7 @@ const Comment = (props) => {
                             <button
                                 style={{background: `url(${require('../img/delete.png')})`, backgroundSize: '100%'}}
                                 className="w-6 h-6"
-                                onClick={deleteComment}
+                                onClick={()=>setShowRemoveDialog(true)}
                             ></button>
                         </>
                     ) : null
