@@ -4,6 +4,7 @@ import Pagination from "../components/Pagination";
 import {useEffect, useState} from "react";
 import {posts} from "../utils/posts";
 import InputWithCaption from "../components/InputWithCaption";
+import Loader from "../components/Loader";
 
 const MainPage = () => {
 
@@ -27,21 +28,32 @@ const MainPage = () => {
 
     return (
         <div className="space-y-10 py-8">
-            <SearchUser />
-            <div className="bg-neutral-100 rounded-3xl border-gray-200 border-4 p-2">
-                <InputWithCaption
-                    caption="Search post"
-                    inputValue={postFilter}
-                    changeHandler={e=>setPostFilterHandler(e.target.value)}
-                />
-            </div>
-            <div className="flex flex-wrap justify-between space-y-12">
-                <div className="hidden"/>
-                {currentPosts?.map(e=>{
-                    return <PostPreview title={e.title} img={e.image} id={e._id}/>
-                })}
-            </div>
-            <Pagination limit={10} itemsCount={paginationLimit} value={paginationValue} setValue={setPaginationValue}/>
+            {
+                    currentPosts ? (
+                    <>
+                        <SearchUser />
+                        <div className="bg-neutral-100 rounded-3xl border-gray-200 border-4 p-2">
+                            <InputWithCaption
+                                caption="Search post"
+                                inputValue={postFilter}
+                                changeHandler={e=>setPostFilterHandler(e.target.value)}
+                            />
+                        </div>
+                        <div className="flex flex-wrap justify-between space-y-12 items-center lg:flex-row flex-col">
+                            <div className="hidden"/>
+                            {currentPosts.map(e=>{
+                                return <PostPreview
+                                    title={e.title}
+                                    img={e.image}
+                                    id={e._id}
+                                    key={e._id}
+                                />
+                            })}
+                        </div>
+                        <Pagination limit={10} itemsCount={paginationLimit} value={paginationValue} setValue={setPaginationValue}/>
+                    </>
+                    ) : <Loader />
+            }
         </div>
     )
 }

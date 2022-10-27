@@ -9,7 +9,7 @@ export const posts = {
             return (await axios.get(`${URL}/posts?postedBy=${id}`)).data
         }
         catch (err){
-            return null
+            throw err
         }
 
     },
@@ -21,7 +21,7 @@ export const posts = {
             return (await axios.get(`${URL}/posts?skip=${skip}`)).data
         }
         catch (err){
-            return null
+            return err
         }
     },
 
@@ -30,7 +30,7 @@ export const posts = {
             return (await axios.get(`${URL}/posts/${id}`)).data
         }
         catch (err){
-            return null
+            throw err
         }
     },
     async updateImg(id, avatar){
@@ -105,7 +105,7 @@ export const posts = {
             await axios.delete(`${URL}/posts/${id}`, config)
         }
         catch (err){
-            return null
+            return err
         }
     },
 
@@ -118,7 +118,7 @@ export const posts = {
             await axios.put(`${URL}/posts/like/${postId}`, {}, config)
         }
         catch (err){
-            return null
+            return err
         }
     }
 }

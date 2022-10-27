@@ -2,7 +2,7 @@ import {auth} from "../utils/auth";
 import InputWithCaption from "./InputWithCaption";
 import SubmitButton from "./SubmitButton";
 import ResetButton from "./ResetButton";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 
 const SignUpForm = (props) => {
     const [signUpData, setSignUpData] = useState({
@@ -49,7 +49,7 @@ const SignUpForm = (props) => {
 
     return (
         <div className="bg-neutral-100 rounded-3xl">
-            <form className="w-4/5 space-y-8 flex flex-col" onSubmit={formSubmitHandler}>
+            <form className="xl:w-4/5 w-full space-y-8 flex flex-col" onSubmit={formSubmitHandler}>
                 <InputWithCaption
                     caption="Email"
                     type="email"

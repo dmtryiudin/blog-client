@@ -41,14 +41,13 @@ const AuthForm = (props) => {
         }
 
         else{
-            console.log(res.data)
             dispatch({type:"LOGIN", payload:res.data})
         }
     }
 
     return (
         <div className="bg-neutral-100 rounded-3xl">
-            <form className="w-4/5 space-y-8 flex flex-col" onSubmit={formSubmitHandler}>
+            <form className="xl:w-4/5 w-full space-y-8 flex flex-col" onSubmit={formSubmitHandler}>
                 <InputWithCaption caption="Email" changeHandler={setEmail} inputValue={authData.email} type="email"/>
                 <InputWithCaption caption="Password" changeHandler={setPassword} inputValue={authData.password} type="password"/>
                 <div className="w-44 flex justify-between">

@@ -8,7 +8,7 @@ export const comments = {
             return (await axios.get(`${URL}/comments/post/${id}`)).data
         }
         catch (err){
-            return null
+            return err
         }
     },
 
@@ -45,7 +45,7 @@ export const comments = {
             return await axios.delete(`${URL}/comments/${id}`, config)
         }
         catch (err){
-            return null
+            return err
         }
     },
 
@@ -109,7 +109,7 @@ export const comments = {
             await axios.put(`${URL}/comments/like/${id}`, {}, config)
         }
         catch (err){
-            return null
+            return err
         }
     }
 }

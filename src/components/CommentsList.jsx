@@ -13,7 +13,7 @@ const CommentsList = (props) => {
                         commentedBy={e.commentedBy}
                         followedComment={followedComment}
                         id={e._id}
-
+                        key={e._id}
                         updateComments={props.updateComments}
                         likes={e.likes}
                         postId={props.postId}
@@ -25,7 +25,7 @@ const CommentsList = (props) => {
                     commentedBy={e.commentedBy}
                     likes={e.likes}
                     id={e._id}
-
+                    key={e._id}
                     updateComments={props.updateComments}
                     postId={props.postId}
                 />

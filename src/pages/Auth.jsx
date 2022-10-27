@@ -11,7 +11,7 @@ const Auth = () => {
 
 
     return (
-        <div className="bg-neutral-100 rounded-3xl w-1/2 mx-auto border-gray-200 border-4 p-7 my-14">
+        <div className="bg-neutral-100 rounded-3xl xl:w-1/2 mx-auto border-gray-200 border-4 p-7 my-14 w-full">
             <nav className="flex w-full space-x-5 mb-8">
                 <Link to="signin" className="font-bold underline font-sans font-normal text-lg text-neutral-600 hover:text-neutral-400">Sign In</Link>
                 <Link to="signup" className="font-bold underline font-sans font-normal text-lg text-neutral-600 hover:text-neutral-400">Sign Up</Link>

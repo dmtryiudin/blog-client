@@ -5,25 +5,28 @@ import InputWithCaption from "../components/InputWithCaption";
 import SubmitButton from "../components/SubmitButton";
 import ResetButton from "../components/ResetButton";
 import ErrorMessage from "../components/ErrorMessage";
+import NotFound from "./NotFound";
+import Loader from "../components/Loader";
 
 const UpdatePost = () => {
     const id = useParams().id
-    const [initialPostData, setInitialPostData] = useState(null)
     const [currentPostData, setCurrentPostData] = useState(null)
     const [newImage, setNewImage] = useState(null)
     const [error, setError] = useState(null)
+    const [loadingError, setLoadingError] = useState(false)
 
     useEffect(()=>{
         posts.getPostById(id)
             .then((e)=>{
-                console.log(e)
                 const postData = {
                     title: e.title,
                     fullText: e.fullText,
                     description: e.description
                 }
-                setInitialPostData(postData)
                 setCurrentPostData(postData)
+            })
+            .catch(()=>{
+                setLoadingError(true)
             })
     }, [])
 
@@ -37,51 +40,56 @@ const UpdatePost = () => {
         if(response.error){
             setError(response.data)
         }
-        if(newImage){
-            await posts.updateImg(id, newImage)
+        else {
+            if(newImage){
+                await posts.updateImg(id, newImage)
+            }
+            window.location = '/post/' + id
         }
 
     }
 
     function clearForm(){
-        setCurrentPostData(initialPostData)
+        window.location = '/post/' + id
     }
 
     return (
-        <>
-            {currentPostData &&
-                <form onSubmit={e=>sendForm(e)}>
-                    <div className="bg-neutral-100 rounded-3xl mx-auto border-gray-200 border-4 p-7 my-14 w-4/5 space-y-8 flex flex-col">
-                        <div>
-                            <input type="file" onChange={e=>changeImgHandler(e)} accept="image/*" />
+        (!loadingError) ? (
+            <>
+                {currentPostData ?
+                    <form onSubmit={e=>sendForm(e)}>
+                        <div className="bg-neutral-100 rounded-3xl mx-auto border-gray-200 border-4 p-7 my-14 w-4/5 space-y-8 flex flex-col">
+                            <div>
+                                <input type="file" onChange={e=>changeImgHandler(e)} accept="image/*" />
+                            </div>
+                            <InputWithCaption
+                                type="text"
+                                inputValue={currentPostData.title}
+                                caption="Title"
+                                changeHandler={e=>setCurrentPostData({...currentPostData, title: e.target.value})}
+                            />
+                            <InputWithCaption
+                                type="text"
+                                inputValue={currentPostData.fullText}
+                                caption="Full text"
+                                changeHandler={e=>setCurrentPostData({...currentPostData, fullText: e.target.value})}
+                            />
+                            <InputWithCaption
+                                type="text"
+                                inputValue={currentPostData.description}
+                                caption="Description"
+                                changeHandler={e=>setCurrentPostData({...currentPostData, description: e.target.value})}
+                            />
+                            <div className="w-44 flex justify-between">
+                                <SubmitButton />
+                                <ResetButton clickHandler={clearForm}/>
+                            </div>
+                            { error && <ErrorMessage message={error} /> }
                         </div>
-                        <InputWithCaption
-                            type="text"
-                            inputValue={currentPostData.title}
-                            caption="Title"
-                            changeHandler={e=>setCurrentPostData({...currentPostData, title: e.target.value})}
-                        />
-                        <InputWithCaption
-                            type="text"
-                            inputValue={currentPostData.fullText}
-                            caption="Full text"
-                            changeHandler={e=>setCurrentPostData({...currentPostData, fullText: e.target.value})}
-                        />
-                        <InputWithCaption
-                            type="text"
-                            inputValue={currentPostData.description}
-                            caption="Description"
-                            changeHandler={e=>setCurrentPostData({...currentPostData, description: e.target.value})}
-                        />
-                        <div className="w-44 flex justify-between">
-                            <SubmitButton />
-                            <ResetButton clickHandler={clearForm}/>
-                        </div>
-                        { error && <ErrorMessage message={error} /> }
-                    </div>
-                </form>
-            }
-        </>
+                    </form> : <Loader />
+                }
+            </>
+        ) : <NotFound />
     )
 }
 

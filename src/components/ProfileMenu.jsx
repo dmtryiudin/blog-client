@@ -1,8 +1,7 @@
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import {auth} from "../utils/auth";
 
 const ProfileMenu = (props) => {
-    const dispatch = useDispatch()
     const authData = useSelector(state => state.auth)
 
     function logIn(){
@@ -35,9 +34,35 @@ const ProfileMenu = (props) => {
     ]
 
     return (
-        <div className="w-36 bg-white hidden group-hover:block absolute right-0">
-            {menuButtons.map(e=>{
-                return <div onClick={e.func} className="cursor-pointer z-50">{e.title}</div>
+        <div className="w-36
+        hidden
+        group-hover:block
+        absolute
+        right-0
+        z-50
+        bg-neutral-100
+        rounded-lg
+        border-neutral-200
+        border-2">
+            {menuButtons.map((e, index)=>{
+                return (
+                    <div
+                    onClick={e.func}
+                    className="
+                        rounded-lg
+                        cursor-pointer
+                        p-4
+                        box-border
+                        text-center
+                        bg-neutral-100
+                        hover:bg-neutral-400
+                        text-lg
+                        "
+                    key={index}
+                    >
+                        {e.title}
+                     </div>
+                )
             })}
         </div>
     )

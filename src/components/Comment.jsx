@@ -86,14 +86,14 @@ const Comment = (props) => {
                 }
                 <div className="flex items-center justify-between">
                     <div className="flex items-center">
-                        <img src={commentedBy?.avatar ? ('http://test-blog-api.ficuslife.com' + commentedBy.avatar) : require('../img/unknown.jpg')} className="w-16 h-16 rounded-full"/>
+                        <img src={commentedBy?.avatar ? ('http://test-blog-api.ficuslife.com' + commentedBy.avatar) : require('../img/unknown.jpg')} className="w-16 h-16 rounded-full hidden sm:block"/>
                         <a href={'/profile/' + commentedBy?._id}>
-                            <h3 className="font-sans font-bold text-2xl ml-4">{commentedBy?.name}</h3>
+                            <h3 className="font-sans font-bold text-2xl ml-0 sm:ml-4">{commentedBy?.name}</h3>
                         </a>
                     </div>
-                    <span className="font-sans font-normal text-lg ml-4">{convertDate(props.date)}</span>
+                    <span className="font-sans font-normal text-lg ml-4 hidden sm:block">{convertDate(props.date)}</span>
                 </div>
-                <div className="mt-4 font-sans font-normal text-2xl">{props.text}</div>
+                <div className="mt-4 font-sans font-normal text-2xl break-all">{props.text}</div>
                 <div className="flex items-center mt-6">
                     <button className="w-6 h-6" onClick={addLike}>
                         <img src={isLike ? require('../img/like.png') : require('../img/unlike.png')} className="w-6 h-6" />

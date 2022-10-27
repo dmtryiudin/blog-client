@@ -1,7 +1,17 @@
 const NotFound = () => {
     return (
-        <div className="w-full flex content-center justify-center h-full">
-            ¯\_(^ ^)_/¯  Not found
+        <div className="text-center
+        absolute
+        top-2/4
+        left-2/4
+        leading-loose
+        text-3xl
+        font-semibold
+        uppercase
+
+        "
+             style={{transform: 'translate(-50%, -50%)'}}>
+            404<br/>¯\_(^ ^)_/¯<br/>Not found
         </div>
     )
 }

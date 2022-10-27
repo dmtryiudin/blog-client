@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import InputWithCaption from "../components/InputWithCaption";
 import SubmitButton from "../components/SubmitButton";
 import ResetButton from "../components/ResetButton";
@@ -19,11 +19,7 @@ const CreatePost = () => {
     }
 
     function clearForm(){
-        setPostData({
-            title: "",
-            fullText: "",
-            description: ""
-        })
+        window.location = '/'
     }
 
     async function sendForm(e){
@@ -36,13 +32,13 @@ const CreatePost = () => {
             if(postImg){
                 await posts.updateImg(newPostData.data._id, postImg)
             }
+            window.location = '/post/' + newPostData.data._id
         }
-        console.log(newPostData)
     }
 
     return (
         <form onSubmit={e=>sendForm(e)}>
-            <div className="bg-neutral-100 rounded-3xl mx-auto border-gray-200 border-4 p-7 my-14 w-4/5 space-y-8 flex flex-col">
+            <div className="bg-neutral-100 rounded-3xl mx-auto border-gray-200 border-4 p-7 my-14 lg:w-4/5 w-full space-y-8 flex flex-col">
                 <div>
                     <input type="file" onChange={e=>changeImgHandler(e)} accept="image/*" />
                 </div>

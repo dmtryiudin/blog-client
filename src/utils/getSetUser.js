@@ -16,7 +16,7 @@ export const getSetUser = {
             auth.logout()
         }
         catch (err){
-            return null
+            return err
         }
     },
 
@@ -32,24 +32,31 @@ export const getSetUser = {
 
         }
         catch (err){
-            return null
+            return err
         }
     },
 
     async updateUserData(id, data){
-        const config = {
-            headers: { Authorization: `Bearer ${token}` },
-        };
+        try {
+            const config = {
+                headers: { Authorization: `Bearer ${token}` },
+            };
 
-        await axios.patch(`${URL}/users/${id}`, data, config)
+            await axios.patch(`${URL}/users/${id}`, data, config)
+        }
+
+        catch (err){
+            return err
+        }
     },
 
     async getUserById(id){
         try {
-            return (await axios.get(`${URL}/users/${id}`)).data
+            const fetchData = (await axios.get(`${URL}/users/${id}`)).data
+            return fetchData
         }
         catch (err){
-            return null
+            throw err
         }
     },
 
@@ -58,7 +65,7 @@ export const getSetUser = {
             return (await axios.get(`${URL}/users/?limit=999999999999999999999999999`)).data
         }
         catch (err){
-            return null
+            return err
         }
     }
 }

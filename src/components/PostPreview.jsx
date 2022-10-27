@@ -1,15 +1,15 @@
 const PostPreview = (props) => {
     function cutLine(str){
-        return str.length > 20 ? str.slice(0, 20)+'...' : str
+        return str.length > 15 ? str.slice(0, 15)+'...' : str
     }
     return (
         <a href={"/post/" + props.id}>
-            <div className="p-8 w-96 bg-neutral-100 rounded-2xl border-gray-200 border-4">
+            <div className="p-8 sm:w-96 w-64 bg-neutral-100 rounded-2xl border-gray-200 border-4">
                 <img
                     src={props.img ? ("http://test-blog-api.ficuslife.com" + props.img) : require('../img/noimage.png')}
-                    className="w-96 h-56"
+                    className="w-full h-56"
                 />
-                <h3 title={props.title} className="text-2xl font-sans font-semibold mt-4">{cutLine(props.title)}</h3>
+                <h3 title={props.title} className="text-2xl font-sans font-semibold mt-4 break-all">{cutLine(props.title)}</h3>
             </div>
         </a>
     )

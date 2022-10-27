@@ -28,28 +28,18 @@ const ProfileSettings = () => {
     }
 
     function clearForm(){
-        setAvatar(authData.fetchUserData.avatar || require('../img/unknown.jpg'))
-        setNewData(
-            {
-                name: authData.fetchUserData.name || "",
-                extra_details: authData.fetchUserData.extra_details || "",
-                skills: authData.fetchUserData.skills || "",
-                profession: authData.fetchUserData.profession || "",
-                details: authData.fetchUserData.details || "",
-            }
-        )
+        window.location = "/profile/" + authData.fetchUserData._id
     }
 
     async function sendForm(e){
         e.preventDefault()
-        console.log(avatar)
         if(avatar){
             await getSetUser.updateAvatar(authData.fetchUserData._id, avatar)
             dispath({type: 'SET_USER_DATA', payload:(await auth.getDataByToken()).data})
         }
-            await getSetUser.updateUserData(authData.fetchUserData._id, newData)
-            dispath({type: 'SET_USER_DATA', payload:(await auth.getDataByToken()).data})
-
+        await getSetUser.updateUserData(authData.fetchUserData._id, newData)
+        dispath({type: 'SET_USER_DATA', payload:(await auth.getDataByToken()).data})
+        window.location = "/profile/" + authData.fetchUserData._id
     }
 
     function changeAvatarHandler(e){
