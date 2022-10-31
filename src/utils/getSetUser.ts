@@ -27,7 +27,7 @@ export const getSetUser = {
         }
     },
 
-    async updateAvatar(id:string, avatar:Array<Blob>):Promise<void | AxiosError>{
+    async updateAvatar(id:string, avatar:FileList):Promise<void | AxiosError>{
 
         try{
             const config:AuthHeader = {

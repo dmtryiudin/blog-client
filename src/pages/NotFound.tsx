@@ -1,4 +1,6 @@
-const NotFound = () => {
+import React from "react";
+
+const NotFound:React.FC = () => {
     return (
         <div className="text-center
         absolute

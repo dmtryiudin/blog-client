@@ -3,28 +3,26 @@ import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 import Auth from "./pages/Auth";
 import Layout from "./pages/Layout";
 import NotFound from "./pages/NotFound";
-import {useSelector} from "react-redux";
 import MainPage from "./pages/MainPage";
 import Profile from "./pages/Profile";
 import ProfileSettings from "./pages/ProfileSettings";
 import Post from "./pages/Post";
 import CreatePost from "./pages/CreatePost";
 import UpdatePost from "./pages/UpdatePost";
-import {useEffect} from "react";
+import React, {useEffect} from "react";
 import {auth} from "./utils/auth";
 import ErrorBoundary from "./components/ErrorBoundary";
+import {useTypedSelector} from "./hooks/useTypedSelector";
+import {AuthState} from "./types/storeTypes";
 
-
-function App() {
-    const authData = useSelector(state => state.auth)
+const App:React.FC = () => {
+    const authData:AuthState = useTypedSelector(state => state.auth)
 
     useEffect(()=>{
        if(authData.isAuth){
            auth.getDataByToken()
                .then((res)=>{
-                   console.log(res)
                    if(res.error){
-                       console.log('logoutttt')
                        auth.logout()
                    }
                })

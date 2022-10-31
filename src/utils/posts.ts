@@ -40,7 +40,7 @@ export const posts = {
             throw err
         }
     },
-    async updateImg(id:string, avatar:Array<Blob>):Promise<PostRes>{
+    async updateImg(id:string, avatar:FileList):Promise<PostRes>{
         try{
             const config:AuthHeader = {
                 headers: { Authorization: `Bearer ${token}` },
