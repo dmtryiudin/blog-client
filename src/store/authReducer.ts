@@ -1,4 +1,6 @@
-const defaultState = {
+import {AuthState, AuthAction, AuthActionTypes} from "../types/storeTypes";
+
+const defaultState:AuthState = {
     isAuth: false,
     fetchUserData: {
         _id: "",
@@ -13,15 +15,11 @@ const defaultState = {
     }
 }
 
-const LOGIN = 'LOGIN'
-const LOGOUT = 'LOGOUT'
-const SET_USER_DATA = 'SET_USER_DATA'
-
-export const authReducer = (state = defaultState, action) => {
+export const authReducer = (state = defaultState, action: AuthAction):AuthState => {
     switch (action.type) {
-        case LOGIN:
+        case AuthActionTypes.LOGIN:
             return {...state, isAuth: true, fetchUserData: action.payload}
-        case LOGOUT:
+        case AuthActionTypes.LOGOUT:
             return {
                 ...state,
                 isAuth: false,
@@ -37,7 +35,7 @@ export const authReducer = (state = defaultState, action) => {
                     dateCreated: ""
                 }
             }
-        case SET_USER_DATA:
+        case AuthActionTypes.SET_USER_DATA:
             return {...state, fetchUserData: action.payload}
         default:
             return state
