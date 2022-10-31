@@ -3,7 +3,7 @@ import HeaderComponent from "../components/HeaderComponent";
 import FooterComponent from "../components/FooterComponent";
 import React from "react";
 
-const Layout = () => {
+const Layout:React.FC = () => {
     return (
         <div className="min-h-full flex flex-col">
             <HeaderComponent />
