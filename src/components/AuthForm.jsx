@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import InputWithCaption from "./InputWithCaption";
 import SubmitButton from "./SubmitButton";
 import ResetButton from "./ResetButton";

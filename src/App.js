@@ -11,7 +11,7 @@ import Post from "./pages/Post";
 import CreatePost from "./pages/CreatePost";
 import UpdatePost from "./pages/UpdatePost";
 import {useEffect} from "react";
-import {auth} from "./utils/auth";
+import {auth} from "./utils/auth.ts";
 import ErrorBoundary from "./components/ErrorBoundary";
 
 

@@ -1,20 +1,28 @@
-import axios from "axios";
-export const URL = 'http://test-blog-api.ficuslife.com/api/v1'
-const token = JSON.parse(localStorage.getItem('token'))
+import axios, {AxiosError} from "axios";
+import {Comment} from "../types/fetchSchemas";
+import {AuthHeader} from "../types/commonTypes";
+import {CommentRes} from "../types/commentsTypes";
+
+export const URL:string = 'http://test-blog-api.ficuslife.com/api/v1'
+let token: string | null = localStorage.getItem('token')
+
+if (token){
+    token = JSON.parse(token)
+}
 
 export const comments = {
-    async getCommentsForPost(id){
+    async getCommentsForPost(id:string):Promise<Comment[] | AxiosError>{
         try{
             return (await axios.get(`${URL}/comments/post/${id}`)).data
         }
-        catch (err){
+        catch (err: AxiosError | any){
             return err
         }
     },
 
-    async addComment(id, commentText){
+    async addComment(id:string, commentText:string):Promise<CommentRes>{
         try{
-            const config = {
+            const config:AuthHeader = {
                 headers: { Authorization: `Bearer ${token}` },
             };
 
@@ -22,13 +30,13 @@ export const comments = {
                 text: commentText
             }
 
-            const fetchData = await axios.post(`${URL}/comments/post/${id}`, data, config)
+            const fetchData:Comment = (await axios.post(`${URL}/comments/post/${id}`, data, config)).data
             return {
                 error: false,
-                data: fetchData.data
+                data: fetchData
             }
         }
-        catch(err){
+        catch(err:AxiosError | any){
             return {
                 error: true,
                 data: err.response.data.error[0].message || err.response.data.error
@@ -36,22 +44,22 @@ export const comments = {
         }
     },
 
-    async deleteComment(id){
+    async deleteComment(id:string): Promise<AxiosError | void>{
         try{
-            const config = {
+            const config:AuthHeader = {
                 headers: { Authorization: `Bearer ${token}` },
             };
 
-            return await axios.delete(`${URL}/comments/${id}`, config)
+            await axios.delete(`${URL}/comments/${id}`, config)
         }
-        catch (err){
+        catch (err:AxiosError | any){
             return err
         }
     },
 
-    async replyToComment(postId, followedComment, commentText){
+    async replyToComment(postId:string, followedComment:string, commentText:string):Promise<CommentRes>{
         try{
-            const config = {
+            const config:AuthHeader = {
                 headers: { Authorization: `Bearer ${token}` },
             };
 
@@ -60,14 +68,14 @@ export const comments = {
                 followedCommentID: followedComment
             }
 
-            const fetchData = await axios.post(`${URL}/comments/post/${postId}`, data, config)
+            const fetchData:Comment = (await axios.post(`${URL}/comments/post/${postId}`, data, config)).data
 
             return {
                 error: false,
-                data: fetchData.data
+                data: fetchData
             }
         }
-        catch(err){
+        catch(err:AxiosError | any){
             return {
                 error: true,
                 data: err.response.data.error[0].message || err.response.data.error
@@ -75,9 +83,9 @@ export const comments = {
         }
     },
 
-    async editComment(id, text){
+    async editComment(id:string, text:string):Promise<CommentRes>{
         try{
-            const config = {
+            const config:AuthHeader = {
                 headers: { Authorization: `Bearer ${token}` },
             };
 
@@ -85,14 +93,14 @@ export const comments = {
                 text: text
             }
 
-            const fetchData = await axios.patch(`${URL}/comments/${id}`, data, config)
+            const fetchData:Comment = (await axios.patch(`${URL}/comments/${id}`, data, config)).data
 
             return {
                 error: false,
-                data: fetchData.data
+                data: fetchData
             }
         }
-        catch (err){
+        catch (err:AxiosError | any){
             return {
                 error: true,
                 data: err.response.data.error[0].message || err.response.data.error
@@ -100,15 +108,15 @@ export const comments = {
         }
     },
 
-    async setLike(id){
+    async setLike(id:string):Promise<void | AxiosError>{
         try {
-            const config = {
+            const config:AuthHeader = {
                 headers: { Authorization: `Bearer ${token}` },
             };
 
             await axios.put(`${URL}/comments/like/${id}`, {}, config)
         }
-        catch (err){
+        catch (err:AxiosError | any){
             return err
         }
     }

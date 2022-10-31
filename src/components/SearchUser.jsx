@@ -9,6 +9,7 @@ const SearchUser = () => {
     useEffect(()=>{
         getSetUser.getAllUsers()
             .then((e)=>{
+                console.log(e)
                 setAllUsers(e)
             })
     }, [])
@@ -33,12 +34,12 @@ const SearchUser = () => {
                 type="text"
             />
 
-            {searchString.trim() &&
-            <div className="absolute bg-white w-fit rounded-b-3xl h-80 overflow-y-scroll border-gray-200 border-b-4 p-2 ml-2 border-neutral-200 border-2">
-                {
-                    filteredUsers.length ? filteredUsers : 'No users found'
-                }
-            </div>}
+            {allUsers && searchString.trim() &&
+                <div className="absolute bg-white w-fit rounded-b-3xl h-80 overflow-y-scroll border-gray-200 border-b-4 p-2 ml-2 border-neutral-200 border-2">
+                    {
+                        filteredUsers.length ? filteredUsers : 'No users found'
+                    }
+                </div>}
         </div>
     )
 }

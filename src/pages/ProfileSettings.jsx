@@ -102,6 +102,7 @@ const ProfileSettings = () => {
                 <button
                     className="bg-red-500 w-full h-10 rounded font-sans font-normal text-md text-white cursor-pointer"
                     onClick={()=>setShowRemoveDialog(true)}
+                    type="button"
                 >
                     Delete user
                 </button>
