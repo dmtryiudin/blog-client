@@ -2,9 +2,14 @@ import {auth} from "../utils/auth";
 import InputWithCaption from "./InputWithCaption";
 import SubmitButton from "./SubmitButton";
 import ResetButton from "./ResetButton";
-import {useState} from "react";
+import React, {FormEvent, useState} from "react";
 
-const SignUpForm = (props) => {
+interface SignUpFormProps{
+    setIsError:(a:boolean)=>any,
+    setErrorMessage:(a: string)=>any
+}
+
+const SignUpForm:React.FC<SignUpFormProps> = (props) => {
     const [signUpData, setSignUpData] = useState({
         email: "",
         password: "",
@@ -15,22 +20,22 @@ const SignUpForm = (props) => {
         details: ""
     })
 
-    async function formSubmitHandler(e){
+    async function formSubmitHandler(e:FormEvent<HTMLFormElement>){
         e.preventDefault()
         const res = await auth.signUp(signUpData)
         clearForm()
 
-        if(res?.error){
+        if(res?.error && (typeof res.data === "string")){
             props.setIsError(true)
             props.setErrorMessage(res.data)
         }
 
         else {
-            window.location = '/auth/signin'
+            window.location.href = '/auth/signin'
         }
     }
 
-    function setField(field, value){
+    function setField(field:string | symbol, value:string){
         setSignUpData({...signUpData, [field]:value})
     }
 

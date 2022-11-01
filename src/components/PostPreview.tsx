@@ -1,5 +1,13 @@
-const PostPreview = (props) => {
-    function cutLine(str){
+import React from "react";
+
+interface PostPreviewProps {
+    id:string,
+    img: string,
+    title:string
+}
+
+const PostPreview:React.FC<PostPreviewProps> = (props) => {
+    function cutLine(str:string) : string{
         return str.length > 15 ? str.slice(0, 15)+'...' : str
     }
     return (

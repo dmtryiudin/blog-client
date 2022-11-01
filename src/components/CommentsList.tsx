@@ -1,13 +1,21 @@
-import Comment from "./Comment";
+import CommentComponent from "./CommentComponent";
+import React from "react";
+import {Comment} from "../types/fetchSchemas";
 
-const CommentsList = (props) => {
+interface CommentsListProps{
+    commentsList: Comment[] | null,
+    updateComments: ()=>void,
+    postId: string | undefined,
+}
+
+const CommentsList:React.FC<CommentsListProps> = (props) => {
 
     return (
         <div>
             {props.commentsList && props.commentsList.map(e=>{
                 if(e.followedCommentID){
-                    const followedComment = props.commentsList.filter(el=>el._id === e.followedCommentID)[0]
-                    return <Comment
+                    const followedComment = props.commentsList!.filter(el=>el._id === e.followedCommentID)[0]
+                    return <CommentComponent
                         text={e.text}
                         date={e.dateCreated}
                         commentedBy={e.commentedBy}
@@ -19,7 +27,7 @@ const CommentsList = (props) => {
                         postId={props.postId}
                     />
                 }
-                return <Comment
+                return (<CommentComponent
                     text={e.text}
                     date={e.dateCreated}
                     commentedBy={e.commentedBy}
@@ -28,7 +36,7 @@ const CommentsList = (props) => {
                     key={e._id}
                     updateComments={props.updateComments}
                     postId={props.postId}
-                />
+                />)
             })}
         </div>
     )

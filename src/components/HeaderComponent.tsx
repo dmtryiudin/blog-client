@@ -1,6 +1,6 @@
 import HeaderProfileComponent from "./HeaderProfileComponent";
 
-const HeaderComponent = () => {
+const HeaderComponent:React.FC = () => {
     return (
         <div className="h-28 bg-orange-500 flex items-center sm:p-12 p-4 justify-between">
             <a href="/">

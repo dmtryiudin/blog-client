@@ -1,4 +1,10 @@
-const SubmitButton = (props) => {
+import React from "react";
+
+interface SubmitButtonProps{
+    clickHandler?: (a:any)=>any
+}
+
+const SubmitButton:React.FC<SubmitButtonProps> = (props) => {
     return (
         <input type="submit"
                value="Submit"

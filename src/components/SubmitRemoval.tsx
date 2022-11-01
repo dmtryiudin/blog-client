@@ -1,5 +1,13 @@
-const SubmitRemoval = (props) => {
-    return (props.isShow &&
+import React from "react";
+
+interface SubmitRemovalProps {
+    isShow: boolean,
+    hideModal: ()=>any,
+    removeHandler: ()=>any
+}
+
+const SubmitRemoval:React.FC<SubmitRemovalProps> = (props) => {
+    return (props.isShow ?
                 (
                     <div className="inset-0 bg-black/75 fixed flex justify-center items-center">
                         <div className="w-96 h-56 rounded-xl bg-neutral-100 p-8 flex flex-col items-center justify-between">
@@ -20,7 +28,7 @@ const SubmitRemoval = (props) => {
                             </div>
                         </div>
                     </div>
-                )
+                ) : null
     )
 }
 

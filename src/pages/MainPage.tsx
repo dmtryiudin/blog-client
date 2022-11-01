@@ -42,6 +42,7 @@ const MainPage:React.FC = () => {
                                 caption="Search post"
                                 inputValue={postFilter}
                                 changeHandler={(e: ChangeEvent<HTMLInputElement>)=>setPostFilterHandler(e)}
+                                type="text"
                             />
                         </div>
                         <div className="flex flex-wrap justify-between space-y-12 items-center lg:flex-row flex-col">

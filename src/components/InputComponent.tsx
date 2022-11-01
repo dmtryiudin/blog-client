@@ -1,4 +1,12 @@
-const InputComponent = (props) => {
+import React from "react";
+
+interface InputComponentProps{
+    changeHandler: (a:any)=>any,
+    inputValue: string,
+    type:string
+}
+
+const InputComponent:React.FC<InputComponentProps> = (props) => {
     return (
         <input
             onChange={props.changeHandler}

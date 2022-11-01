@@ -13,7 +13,7 @@ if(token){
 
 
 export const getSetUser = {
-    async deleteUser(id:string): Promise<void | AxiosError>{
+    async deleteUser(id:string): Promise<void>{
         try{
             const config : AuthHeader = {
                 headers: { Authorization: `Bearer ${token}` }
@@ -27,7 +27,7 @@ export const getSetUser = {
         }
     },
 
-    async updateAvatar(id:string, avatar:FileList):Promise<void | AxiosError>{
+    async updateAvatar(id:string, avatar:FileList):Promise<void>{
 
         try{
             const config:AuthHeader = {
@@ -44,7 +44,7 @@ export const getSetUser = {
         }
     },
 
-    async updateUserData(id:string, data:UpdateUserData):Promise<void | AxiosError>{
+    async updateUserData(id:string, data:UpdateUserData):Promise<void>{
         try {
             const config:AuthHeader = {
                 headers: { Authorization: `Bearer ${token}` },
@@ -58,7 +58,7 @@ export const getSetUser = {
         }
     },
 
-    async getUserById(id:string):Promise<User | never>{
+    async getUserById(id:string):Promise<User>{
         try {
             const fetchData:User = (await axios.get(`${URL}/users/${id}`)).data
             return fetchData
@@ -68,7 +68,7 @@ export const getSetUser = {
         }
     },
 
-    async getAllUsers():Promise<UsersList | AxiosError>{
+    async getAllUsers():Promise<UsersList>{
         try {
             return (await axios.get(`${URL}/users/?limit=999999999999999999999999999`)).data
         }

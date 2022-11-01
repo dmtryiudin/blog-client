@@ -1,4 +1,6 @@
-const Loader = () => {
+import React from "react";
+
+const Loader:React.FC = () => {
     return (
             <div className="absolute top-2/4 left-2/4" style={{transform: 'translate(-50%, -50%)'}}>
                 <div className="flex items-center gap-2 text-gray-500">

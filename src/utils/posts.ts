@@ -11,7 +11,7 @@ if(token){
 }
 
 export const posts = {
-    async getPostsForUser(id:string):Promise<PostsList | never>{
+    async getPostsForUser(id:string):Promise<PostsList>{
         try{
             return (await axios.get(`${URL}/posts?postedBy=${id}`)).data
         }
@@ -20,7 +20,7 @@ export const posts = {
         }
 
     },
-    async getPostsWithPagination(skip:number, filter:string):Promise<PostsList | AxiosError>{
+    async getPostsWithPagination(skip:number, filter:string):Promise<PostsList>{
         try{
             if(filter){
                 return (await axios.get(`${URL}/posts?skip=${skip}&search=${filter}`)).data
@@ -32,7 +32,7 @@ export const posts = {
         }
     },
 
-    async getPostById(id:string):Promise<Post | never>{
+    async getPostById(id:string):Promise<Post>{
         try{
             return (await axios.get(`${URL}/posts/${id}`)).data
         }
@@ -103,7 +103,7 @@ export const posts = {
         }
     },
 
-    async deletePost(id:string | undefined):Promise<void | AxiosError>{
+    async deletePost(id:string | undefined):Promise<void>{
         try {
             const config:AuthHeader = {
                 headers: { Authorization: `Bearer ${token}` },
@@ -116,7 +116,7 @@ export const posts = {
         }
     },
 
-    async addLike(postId:string):Promise<void | AxiosError>{
+    async addLike(postId:string):Promise<void>{
         try {
             const config:AuthHeader = {
                 headers: { Authorization: `Bearer ${token}` },

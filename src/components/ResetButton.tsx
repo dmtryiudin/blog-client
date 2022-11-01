@@ -1,4 +1,10 @@
-const ResetButton = (props) => {
+import React from "react";
+
+interface ResetButtonProps{
+    clickHandler: (a:any)=>any
+}
+
+const ResetButton:React.FC<ResetButtonProps> = (props) => {
     return (
         <input type="reset"
                value="Cancel"

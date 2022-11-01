@@ -11,7 +11,7 @@ if (token){
 }
 
 export const comments = {
-    async getCommentsForPost(id:string):Promise<Comment[] | AxiosError>{
+    async getCommentsForPost(id:string):Promise<Comment[]>{
         try{
             return (await axios.get(`${URL}/comments/post/${id}`)).data
         }
@@ -20,7 +20,7 @@ export const comments = {
         }
     },
 
-    async addComment(id:string, commentText:string):Promise<CommentRes>{
+    async addComment(id:string | undefined, commentText:string):Promise<CommentRes>{
         try{
             const config:AuthHeader = {
                 headers: { Authorization: `Bearer ${token}` },
@@ -44,7 +44,7 @@ export const comments = {
         }
     },
 
-    async deleteComment(id:string): Promise<AxiosError | void>{
+    async deleteComment(id:string | undefined): Promise<void>{
         try{
             const config:AuthHeader = {
                 headers: { Authorization: `Bearer ${token}` },
@@ -57,7 +57,7 @@ export const comments = {
         }
     },
 
-    async replyToComment(postId:string, followedComment:string, commentText:string):Promise<CommentRes>{
+    async replyToComment(postId:string | undefined, followedComment:string | undefined, commentText:string):Promise<CommentRes>{
         try{
             const config:AuthHeader = {
                 headers: { Authorization: `Bearer ${token}` },
@@ -83,7 +83,7 @@ export const comments = {
         }
     },
 
-    async editComment(id:string, text:string):Promise<CommentRes>{
+    async editComment(id:string | undefined, text:string):Promise<CommentRes>{
         try{
             const config:AuthHeader = {
                 headers: { Authorization: `Bearer ${token}` },
@@ -108,7 +108,7 @@ export const comments = {
         }
     },
 
-    async setLike(id:string):Promise<void | AxiosError>{
+    async setLike(id:string | undefined):Promise<void>{
         try {
             const config:AuthHeader = {
                 headers: { Authorization: `Bearer ${token}` },

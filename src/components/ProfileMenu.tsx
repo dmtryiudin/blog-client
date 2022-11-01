@@ -1,11 +1,13 @@
-import {useSelector} from "react-redux";
 import {auth} from "../utils/auth";
+import React from "react";
+import {useTypedSelector} from "../hooks/useTypedSelector";
 
-const ProfileMenu = (props) => {
-    const authData = useSelector(state => state.auth)
+
+const ProfileMenu:React.FC = (props) => {
+    const authData = useTypedSelector(state => state.auth)
 
     function logIn(){
-        window.location = "/auth"
+        window.location.href = "/auth"
     }
 
     const menuButtons = [
@@ -16,19 +18,19 @@ const ProfileMenu = (props) => {
         {
             title: 'My profile',
             func: ()=>{
-                window.location="/profile/" + authData.fetchUserData._id
+                window.location.href="/profile/" + authData.fetchUserData!._id
             }
         },
         {
             title: 'Create post',
             func: ()=>{
-                window.location="/create-post"
+                window.location.href="/create-post"
             }
         },
         {
             title: 'Edit profile',
             func: ()=>{
-                window.location="/profile-settings"
+                window.location.href="/profile-settings"
             }
         }
     ]

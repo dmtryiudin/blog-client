@@ -1,9 +1,18 @@
-const Pagination = (props) => {
-    function nextPage(){
+import React from "react";
+
+interface PaginationProps {
+    setValue: (a:number)=>any,
+    value:number,
+    limit:number,
+    itemsCount: number
+}
+
+const Pagination:React.FC<PaginationProps> = (props) => {
+    function nextPage():void{
         props.setValue(props.value+props.limit)
     }
 
-    function prevPage(){
+    function prevPage():void{
         props.setValue(props.value-props.limit)
     }
 

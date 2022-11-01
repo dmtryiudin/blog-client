@@ -1,15 +1,15 @@
 import {getSetUser} from "../utils/getSetUser";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import InputWithCaption from "./InputWithCaption";
+import {UsersList} from "../types/getSetUser";
 
-const SearchUser = () => {
-    const [allUsers, setAllUsers] = useState(null)
-    const [searchString, setSearchString] = useState('')
+const SearchUser:React.FC = () => {
+    const [allUsers, setAllUsers] = useState<UsersList | null>(null)
+    const [searchString, setSearchString] = useState<string>('')
 
     useEffect(()=>{
         getSetUser.getAllUsers()
             .then((e)=>{
-                console.log(e)
                 setAllUsers(e)
             })
     }, [])
@@ -37,7 +37,7 @@ const SearchUser = () => {
             {allUsers && searchString.trim() &&
                 <div className="absolute bg-white w-fit rounded-b-3xl h-80 overflow-y-scroll border-gray-200 border-b-4 p-2 ml-2 border-neutral-200 border-2">
                     {
-                        filteredUsers.length ? filteredUsers : 'No users found'
+                        filteredUsers!.length ? filteredUsers : 'No users found'
                     }
                 </div>}
         </div>

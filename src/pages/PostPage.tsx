@@ -11,7 +11,6 @@ import Loader from "../components/Loader";
 import NotFound from "./NotFound";
 import {Comment, Post, User} from '../types/fetchSchemas'
 import {useTypedSelector} from "../hooks/useTypedSelector";
-import {AxiosError} from "axios";
 import {convertDate} from "../utils/commonFunctions";
 
 const PostPage:React.FC = () => {
@@ -19,7 +18,7 @@ const PostPage:React.FC = () => {
     const [authorData, setAuthorData] = useState<User | null>(null)
     const [isLiked, setIsLiked] = useState<boolean>(false)
     const [showModal, setShowModal] = useState<boolean>(false)
-    const [commentsList, setCommentsList] = useState<Comment[] | null | AxiosError>(null)
+    const [commentsList, setCommentsList] = useState<Comment[] | null>(null)
     const [showRemoveDialog, setShowRemoveDialog] = useState<boolean>(false)
     const [errorData, setErrorData] = useState<boolean>(false)
 

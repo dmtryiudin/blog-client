@@ -1,27 +1,33 @@
-import {useState} from "react";
+import React, {ChangeEvent, FormEvent, useState} from "react";
 import InputWithCaption from "./InputWithCaption";
 import SubmitButton from "./SubmitButton";
 import ResetButton from "./ResetButton";
 import {auth} from "../utils/auth";
 import {useDispatch} from "react-redux";
+import {AuthData} from "../types/authTypes";
 
-const AuthForm = (props) => {
-    const [authData, setAuthData] = useState({
+interface AuthFormProps{
+    setIsError: (a:boolean)=>any,
+    setErrorMessage: (a:string)=>any
+}
+
+const AuthForm:React.FC<AuthFormProps> = (props) => {
+    const [authData, setAuthData] = useState<AuthData>({
         email: "",
         password: ""
     })
 
     const dispatch = useDispatch()
 
-    function setEmail(e){
+    function setEmail(e:ChangeEvent<HTMLInputElement>):void{
         setAuthData({...authData, email: e.target.value})
     }
 
-    function setPassword(e){
+    function setPassword(e:ChangeEvent<HTMLInputElement>):void{
         setAuthData({...authData, password: e.target.value})
     }
 
-    function clearForm(){
+    function clearForm():void{
         setAuthData({
             ...authData,
             email: "",
@@ -29,13 +35,13 @@ const AuthForm = (props) => {
         })
     }
 
-    async function formSubmitHandler(e){
+    async function formSubmitHandler(e:FormEvent<HTMLFormElement>):Promise<void> {
         e.preventDefault()
 
         const res = await auth.login(authData)
         clearForm()
 
-        if(res?.error){
+        if(res?.error && (typeof res.data === "string")){
             props.setIsError(true)
             props.setErrorMessage(res.data)
         }

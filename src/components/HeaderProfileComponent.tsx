@@ -1,9 +1,10 @@
 import ProfileMenu from "./ProfileMenu";
-import {useSelector} from "react-redux";
+import React from "react";
+import {useTypedSelector} from "../hooks/useTypedSelector";
 
-const HeaderProfileComponent = () => {
-    const auth = useSelector(state => state.auth)
-    const imgSrc = auth.isAuth ?
+const HeaderProfileComponent:React.FC = () => {
+    const auth = useTypedSelector(state => state.auth)
+    const imgSrc = (auth.isAuth && auth.fetchUserData) ?
         ((auth.fetchUserData.avatar ? 'http://test-blog-api.ficuslife.com' + auth.fetchUserData.avatar : auth.fetchUserData.avatar) || require('../img/unknown.jpg')) :
         require('../img/login.png')
     return (
