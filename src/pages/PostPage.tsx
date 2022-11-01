@@ -1,8 +1,7 @@
 import {useParams} from "react-router-dom";
 import {posts} from "../utils/posts";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {getSetUser} from "../utils/getSetUser";
-import {useSelector} from "react-redux";
 import CommentsList from "../components/CommentsList";
 import Modal from "../components/Modal";
 import EditComment from "../components/EditComment";
@@ -10,74 +9,73 @@ import {comments} from "../utils/comments";
 import SubmitRemoval from "../components/SubmitRemoval";
 import Loader from "../components/Loader";
 import NotFound from "./NotFound";
+import {Comment, Post, User} from '../types/fetchSchemas'
+import {useTypedSelector} from "../hooks/useTypedSelector";
+import {AxiosError} from "axios";
+import {convertDate} from "../utils/commonFunctions";
 
-const Post = () => {
-    const [postData, setPostData] = useState(null)
-    const [authorData, setAuthorData] = useState(null)
-    const [isLiked, setIsLiked] = useState(false)
-    const [showModal, setShowModal] = useState(false)
-    const id = useParams().id
-    const state = useSelector(state => state)
-    const [commentsList, setCommentsList] = useState(null)
-    const [showRemoveDialog, setShowRemoveDialog] = useState(false)
-    const [errorData, setErrorData] = useState(false)
+const PostPage:React.FC = () => {
+    const [postData, setPostData] = useState<Post | null>(null)
+    const [authorData, setAuthorData] = useState<User | null>(null)
+    const [isLiked, setIsLiked] = useState<boolean>(false)
+    const [showModal, setShowModal] = useState<boolean>(false)
+    const [commentsList, setCommentsList] = useState<Comment[] | null | AxiosError>(null)
+    const [showRemoveDialog, setShowRemoveDialog] = useState<boolean>(false)
+    const [errorData, setErrorData] = useState<boolean>(false)
+
+    const id:string | undefined = useParams().id
+    const state = useTypedSelector(state => state.auth)
 
     useEffect(()=>{
        updateData()
         updateComments()
     }, [])
 
-    function updateData(){
-        posts.getPostById(id)
-            .then((e)=>{
-                setPostData(e)
-                if(e?.likes.indexOf(state.auth.fetchUserData._id) >= 0){
-                    setIsLiked(true)
-                }
-                return e
-            })
-            .catch(error=>{
-                setErrorData(true)
-            })
-            .then((e)=>{
-                if(e?.postedBy){
-                    getSetUser.getUserById(e?.postedBy)
-                        .then(e=>{
-                            setAuthorData(e)
-                        })
-                }
-            })
-    }
-
-    function updateComments(){
-        comments.getCommentsForPost(id)
-            .then(e=>{
-                setCommentsList(e)
-            })
-    }
-
-    async function likeHandler(){
-        await posts.addLike(id)
-        setIsLiked(false)
-        updateData()
-    }
-
-    function convertDate(date){
-        function addZero(val){
-            return val.toString().length === 1 ? "0"+val : val
+    function updateData():void{
+        if (id !== undefined){
+            posts.getPostById(id)
+                .then((e)=>{
+                    setPostData(e)
+                    if(e?.likes.indexOf(state.fetchUserData!._id) >= 0){
+                        setIsLiked(true)
+                    }
+                    return e
+                })
+                .catch(error=>{
+                    setErrorData(true)
+                })
+                .then((e)=>{
+                    if(e?.postedBy){
+                        getSetUser.getUserById(e?.postedBy)
+                            .then(e=>{
+                                setAuthorData(e)
+                            })
+                    }
+                })
         }
-        const newDate = new Date(date)
-        return addZero(newDate.getDate()) + "."
-            + addZero((Number(newDate.getMonth()) + 1)) + "."
-            + newDate.getFullYear() + " "
-            + addZero(newDate.getHours()) + ":"
-            + addZero(newDate.getMinutes())
     }
 
-    async function deletePost(){
+    function updateComments():void{
+        if(id !== undefined){
+            comments.getCommentsForPost(id)
+                .then(e=>{
+                    setCommentsList(e)
+                })
+        }
+    }
+
+    async function likeHandler():Promise<void>{
+        if(id !== undefined){
+            await posts.addLike(id)
+            setIsLiked(false)
+            updateData()
+        }
+    }
+
+    async function deletePost():Promise<void>{
         await posts.deletePost(id)
         setShowRemoveDialog(false)
-        window.location="/profile/" + state.auth.fetchUserData._id
+        window.location.href="/profile/" + state.fetchUserData!._id
     }
 
     return (
@@ -135,7 +133,7 @@ const Post = () => {
                                     </div>
                                 </div>
                                 {
-                                    state.auth.fetchUserData._id === authorData?._id ?
+                                    state.fetchUserData!._id === authorData?._id ?
                                         (
                                             <div className="mt-5 w-44 flex justify-between">
                                                 <button
@@ -168,4 +166,4 @@ const Post = () => {
     )
 }
 
-export default Post
+export default PostPage

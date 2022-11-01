@@ -40,7 +40,7 @@ export const posts = {
             throw err
         }
     },
-    async updateImg(id:string, avatar:FileList):Promise<PostRes>{
+    async updateImg(id:string | undefined, avatar:FileList):Promise<PostRes>{
         try{
             const config:AuthHeader = {
                 headers: { Authorization: `Bearer ${token}` },
@@ -83,7 +83,7 @@ export const posts = {
         }
 
     },
-    async updatePost(id:string, data:UpdatePost):Promise<PostRes>{
+    async updatePost(id:string | undefined, data:UpdatePost):Promise<PostRes>{
         try {
             const config:AuthHeader = {
                 headers: { Authorization: `Bearer ${token}` },
@@ -103,7 +103,7 @@ export const posts = {
         }
     },
 
-    async deletePost(id:string):Promise<void | AxiosError>{
+    async deletePost(id:string | undefined):Promise<void | AxiosError>{
         try {
             const config:AuthHeader = {
                 headers: { Authorization: `Bearer ${token}` },

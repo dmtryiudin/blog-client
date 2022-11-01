@@ -9,3 +9,11 @@ export interface UsersList {
 
     data: Array<User>
 }
+
+export interface UpdateUserData {
+    name: string,
+    extra_details: string,
+    skills: string,
+    profession: string,
+    details: string,
+}

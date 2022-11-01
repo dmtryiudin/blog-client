@@ -1,53 +1,54 @@
 import InputWithCaption from "../components/InputWithCaption";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import SubmitButton from "../components/SubmitButton";
 import ResetButton from "../components/ResetButton";
 import {getSetUser} from "../utils/getSetUser";
 import {auth} from "../utils/auth";
-import {useState} from "react";
+import React, {ChangeEvent, FormEvent, useState} from "react";
 import Modal from "../components/Modal";
 import SubmitRemoval from "../components/SubmitRemoval";
+import {useTypedSelector} from "../hooks/useTypedSelector";
+import {UpdateUserData} from "../types/getSetUser";
 
-const ProfileSettings = () => {
-    const [showRemoveDialog, setShowRemoveDialog] = useState(false)
-    const authData = useSelector(state => state.auth)
-    const dispath = useDispatch()
+const ProfileSettings:React.FC = () => {
+    const [showRemoveDialog, setShowRemoveDialog] = useState<boolean>(false)
+    const authData = useTypedSelector(state => state.auth)
+    const dispatch = useDispatch()
 
-    const [newData, setNewData] = useState({
-        name: authData.fetchUserData.name || "",
-        extra_details: authData.fetchUserData.extra_details || "",
-        skills: authData.fetchUserData.skills || "",
-        profession: authData.fetchUserData.profession || "",
-        details: authData.fetchUserData.details || "",
+    const [newData, setNewData] = useState<UpdateUserData>({
+        name: authData.fetchUserData!.name || "",
+        extra_details: authData.fetchUserData!.extra_details || "",
+        skills: authData.fetchUserData!.skills || "",
+        profession: authData.fetchUserData!.profession || "",
+        details: authData.fetchUserData!.details || "",
     })
+    const [avatar, setAvatar] = useState<null | FileList>(null)
 
-    const [avatar, setAvatar] = useState(null)
-
-    function setField(field, value){
+    function setField(field:string | symbol, value:string):void{
         setNewData({...newData, [field]:value})
     }
 
-    function clearForm(){
-        window.location = "/profile/" + authData.fetchUserData._id
+    function clearForm():void{
+        window.location.href = "/profile/" + authData.fetchUserData!._id
     }
 
-    async function sendForm(e){
+    async function sendForm(e:FormEvent<HTMLFormElement>):Promise<void>{
         e.preventDefault()
         if(avatar){
-            await getSetUser.updateAvatar(authData.fetchUserData._id, avatar)
-            dispath({type: 'SET_USER_DATA', payload:(await auth.getDataByToken()).data})
+            await getSetUser.updateAvatar(authData.fetchUserData!._id, avatar)
+            dispatch({type: 'SET_USER_DATA', payload:(await auth.getDataByToken()).data})
         }
-        await getSetUser.updateUserData(authData.fetchUserData._id, newData)
-        dispath({type: 'SET_USER_DATA', payload:(await auth.getDataByToken()).data})
-        window.location = "/profile/" + authData.fetchUserData._id
+        await getSetUser.updateUserData(authData.fetchUserData!._id, newData)
+        dispatch({type: 'SET_USER_DATA', payload:(await auth.getDataByToken()).data})
+        window.location.href = "/profile/" + authData.fetchUserData!._id
     }
 
-    function changeAvatarHandler(e){
+    function changeAvatarHandler(e:ChangeEvent<HTMLInputElement>):void{
         setAvatar(e.target.files)
     }
 
-    async function deleteUser(){
-        await getSetUser.deleteUser(authData.fetchUserData._id)
+    async function deleteUser():Promise<void>{
+        await getSetUser.deleteUser(authData.fetchUserData!._id)
         setShowRemoveDialog(false)
     }
 
@@ -67,31 +68,31 @@ const ProfileSettings = () => {
                 </div>
                 <InputWithCaption
                     caption="Name"
-                    changeHandler={(e)=>setField('name', e.target.value)}
+                    changeHandler={(e:ChangeEvent<HTMLInputElement>)=>setField('name', e.target.value)}
                     inputValue={newData.name}
                     type="text"
                 />
                 <InputWithCaption
                     caption="Extra details"
-                    changeHandler={(e)=>setField('extra_details', e.target.value)}
+                    changeHandler={(e:ChangeEvent<HTMLInputElement>)=>setField('extra_details', e.target.value)}
                     inputValue={newData.extra_details}
                     type="text"
                 />
                 <InputWithCaption
                     caption="Skills"
-                    changeHandler={(e)=>setField('skills', e.target.value)}
+                    changeHandler={(e:ChangeEvent<HTMLInputElement>)=>setField('skills', e.target.value)}
                     inputValue={newData.skills}
                     type="text"
                 />
                 <InputWithCaption
                     caption="Profession"
-                    changeHandler={(e)=>setField('profession', e.target.value)}
+                    changeHandler={(e:ChangeEvent<HTMLInputElement>)=>setField('profession', e.target.value)}
                     inputValue={newData.profession}
                     type="text"
                 />
                 <InputWithCaption
                     caption="Details"
-                    changeHandler={(e)=>setField('details', e.target.value)}
+                    changeHandler={(e:ChangeEvent<HTMLInputElement>)=>setField('details', e.target.value)}
                     inputValue={newData.details}
                     type="text"
                 />

@@ -1,5 +1,5 @@
 import {useParams} from "react-router-dom";
-import {useEffect, useState} from "react";
+import React, {ChangeEvent, FormEvent, useEffect, useState} from "react";
 import {posts} from "../utils/posts";
 import InputWithCaption from "../components/InputWithCaption";
 import SubmitButton from "../components/SubmitButton";
@@ -7,50 +7,55 @@ import ResetButton from "../components/ResetButton";
 import ErrorMessage from "../components/ErrorMessage";
 import NotFound from "./NotFound";
 import Loader from "../components/Loader";
+import {UpdatePost} from "../types/postsTypes";
 
-const UpdatePost = () => {
-    const id = useParams().id
-    const [currentPostData, setCurrentPostData] = useState(null)
-    const [newImage, setNewImage] = useState(null)
-    const [error, setError] = useState(null)
-    const [loadingError, setLoadingError] = useState(false)
+const UpdatePostPage:React.FC = () => {
+    const id:string | undefined = useParams().id
+    const [currentPostData, setCurrentPostData] = useState<UpdatePost | null>(null)
+    const [newImage, setNewImage] = useState<FileList | null>(null)
+    const [error, setError] = useState<string | null>(null)
+    const [loadingError, setLoadingError] = useState<boolean>(false)
 
     useEffect(()=>{
-        posts.getPostById(id)
-            .then((e)=>{
-                const postData = {
-                    title: e.title,
-                    fullText: e.fullText,
-                    description: e.description
-                }
-                setCurrentPostData(postData)
-            })
-            .catch(()=>{
-                setLoadingError(true)
-            })
+        if(id !== undefined){
+            posts.getPostById(id)
+                .then((e)=>{
+                    const postData = {
+                        title: e.title,
+                        fullText: e.fullText,
+                        description: e.description
+                    }
+                    setCurrentPostData(postData)
+                })
+                .catch(()=>{
+                    setLoadingError(true)
+                })
+        }
     }, [])
 
-    function changeImgHandler(e){
+    function changeImgHandler(e:ChangeEvent<HTMLInputElement>):void{
         setNewImage(e.target.files)
     }
 
-    async function sendForm(e){
+    async function sendForm(e:FormEvent<HTMLFormElement>):Promise<void>{
         e.preventDefault()
-        const response = await posts.updatePost(id, currentPostData)
-        if(response.error){
-            setError(response.data)
-        }
-        else {
-            if(newImage){
-                await posts.updateImg(id, newImage)
+        if(currentPostData !== null){
+            const response = await posts.updatePost(id, currentPostData)
+            if(response.error && (typeof response.data === "string")){
+                setError(response.data)
             }
-            window.location = '/post/' + id
+            else {
+                if(newImage){
+                    await posts.updateImg(id, newImage)
+                }
+                window.location.href = '/post/' + id
+            }
         }
 
     }
 
-    function clearForm(){
-        window.location = '/post/' + id
+    function clearForm():void{
+        window.location.href = '/post/' + id
     }
 
     return (
@@ -66,19 +71,19 @@ const UpdatePost = () => {
                                 type="text"
                                 inputValue={currentPostData.title}
                                 caption="Title"
-                                changeHandler={e=>setCurrentPostData({...currentPostData, title: e.target.value})}
+                                changeHandler={(e:ChangeEvent<HTMLInputElement>)=>setCurrentPostData({...currentPostData, title: e.target.value})}
                             />
                             <InputWithCaption
                                 type="text"
                                 inputValue={currentPostData.fullText}
                                 caption="Full text"
-                                changeHandler={e=>setCurrentPostData({...currentPostData, fullText: e.target.value})}
+                                changeHandler={(e:ChangeEvent<HTMLInputElement>)=>setCurrentPostData({...currentPostData, fullText: e.target.value})}
                             />
                             <InputWithCaption
                                 type="text"
                                 inputValue={currentPostData.description}
                                 caption="Description"
-                                changeHandler={e=>setCurrentPostData({...currentPostData, description: e.target.value})}
+                                changeHandler={(e:ChangeEvent<HTMLInputElement>)=>setCurrentPostData({...currentPostData, description: e.target.value})}
                             />
                             <div className="w-44 flex justify-between">
                                 <SubmitButton />
@@ -93,4 +98,4 @@ const UpdatePost = () => {
     )
 }
 
-export default UpdatePost
+export default UpdatePostPage

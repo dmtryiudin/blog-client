@@ -1,28 +1,33 @@
 import PostPreview from "../components/PostPreview";
 import SearchUser from "../components/SearchUser";
 import Pagination from "../components/Pagination";
-import {useEffect, useState} from "react";
+import React, {ChangeEvent, useEffect, useState} from "react";
 import {posts} from "../utils/posts";
 import InputWithCaption from "../components/InputWithCaption";
 import Loader from "../components/Loader";
+import {Post} from "../types/fetchSchemas";
 
-const MainPage = () => {
+const MainPage:React.FC = () => {
 
-    const [currentPosts, setCurrentPosts] = useState(null)
-    const [postFilter, setPostFilter] = useState('')
-    const [paginationValue, setPaginationValue] = useState(0)
-    const [paginationLimit, setPaginationLimit] = useState(0)
+    const [currentPosts, setCurrentPosts] = useState<Post[] | null>(null)
+    const [postFilter, setPostFilter] = useState<string>('')
+    const [paginationValue, setPaginationValue] = useState<number>(0)
+    const [paginationLimit, setPaginationLimit] = useState<number>(0)
 
     useEffect(()=>{
         posts.getPostsWithPagination(paginationValue, postFilter)
             .then((e)=>{
-                setCurrentPosts(e.data)
-                setPaginationLimit(e.pagination.total)
+                if ("data" in e) {
+                    setCurrentPosts(e.data)
+                }
+                if ("pagination" in e) {
+                    setPaginationLimit(+e.pagination.total)
+                }
             })
     }, [paginationValue, postFilter])
 
-    function setPostFilterHandler(e){
-        setPostFilter(e)
+    function setPostFilterHandler(e:ChangeEvent<HTMLInputElement>){
+        setPostFilter(e.target.value)
         setPaginationValue(0)
     }
 
@@ -36,7 +41,7 @@ const MainPage = () => {
                             <InputWithCaption
                                 caption="Search post"
                                 inputValue={postFilter}
-                                changeHandler={e=>setPostFilterHandler(e.target.value)}
+                                changeHandler={(e: ChangeEvent<HTMLInputElement>)=>setPostFilterHandler(e)}
                             />
                         </div>
                         <div className="flex flex-wrap justify-between space-y-12 items-center lg:flex-row flex-col">

@@ -1,40 +1,33 @@
 import {useParams} from "react-router-dom";
 import {getSetUser} from "../utils/getSetUser";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {posts} from "../utils/posts";
 import PostPreview from "../components/PostPreview";
 import NotFound from "./NotFound";
 import Loader from "../components/Loader";
+import {Post, User} from "../types/fetchSchemas";
+import {convertDate} from "../utils/commonFunctions";
 
-const Profile = () => {
-    const [userData, setUserData] = useState(null)
-    const [userPosts, setUserPosts] = useState(null)
-    const [errorData, setErrorData] = useState(false)
-    const id = useParams().id
+const Profile:React.FC = () => {
+    const [userData, setUserData] = useState<User | null>(null)
+    const [userPosts, setUserPosts] = useState<Post[] | null>(null)
+    const [errorData, setErrorData] = useState<boolean>(false)
+
+    const id:string | undefined = useParams().id
 
     useEffect(()=>{
-        getSetUser.getUserById(id).then((res)=>{
-            setUserData(res)
-        }).catch(error=>{
+        if(id !== undefined){
+            getSetUser.getUserById(id).then((res)=>{
+                setUserData(res)
+            }).catch(error=>{
                 setErrorData(true)
             })
 
-        posts.getPostsForUser(id).then((res)=>{
-            setUserPosts(res.data)
-        })
-    }, [])
-
-    function convertDate(date){
-        function addZero(val){
-            return val.toString().length === 1 ? "0"+val : val
+            posts.getPostsForUser(id).then((res)=>{
+                setUserPosts(res.data)
+            })
         }
-        const newDate = new Date(date)
-        return addZero(newDate.getDate()) + "."
-            + addZero((Number(newDate.getMonth()) + 1)) + "."
-            + newDate.getFullYear() + " "
-            + addZero(newDate.getHours()) + ":"
-            + addZero(newDate.getMinutes())
-    }
+    }, [])
 
     return (
         (!errorData) ? (

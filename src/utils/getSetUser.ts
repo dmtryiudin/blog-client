@@ -2,7 +2,7 @@ import axios, {AxiosError} from "axios";
 import {auth} from "./auth";
 import {AuthHeader} from "../types/commonTypes";
 import {User} from "../types/fetchSchemas";
-import {UsersList} from "../types/getSetUser";
+import {UpdateUserData, UsersList} from "../types/getSetUser";
 
 export const URL:string = 'http://test-blog-api.ficuslife.com/api/v1'
 let token: string | null = localStorage.getItem('token')
@@ -44,7 +44,7 @@ export const getSetUser = {
         }
     },
 
-    async updateUserData(id:string, data:string):Promise<void | AxiosError>{
+    async updateUserData(id:string, data:UpdateUserData):Promise<void | AxiosError>{
         try {
             const config:AuthHeader = {
                 headers: { Authorization: `Bearer ${token}` },

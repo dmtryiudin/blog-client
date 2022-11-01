@@ -6,9 +6,9 @@ import NotFound from "./pages/NotFound";
 import MainPage from "./pages/MainPage";
 import Profile from "./pages/Profile";
 import ProfileSettings from "./pages/ProfileSettings";
-import Post from "./pages/Post";
+import PostPage from "./pages/PostPage";
 import CreatePost from "./pages/CreatePost";
-import UpdatePost from "./pages/UpdatePost";
+import UpdatePostPage from "./pages/UpdatePostPage";
 import React, {useEffect} from "react";
 import {auth} from "./utils/auth";
 import ErrorBoundary from "./components/ErrorBoundary";
@@ -41,10 +41,10 @@ const App:React.FC = () => {
                                   <Route path="/" element={<MainPage />} />
                                   <Route path="/auth/*" element={ <Auth/> } />
                                   <Route path="/profile/:id" element={<Profile />}/>
-                                  <Route path="/post/:id" element={<Post />} />
+                                  <Route path="/post/:id" element={<PostPage />} />
                                   <Route path="/profile-settings" element={<ProfileSettings />}  />
                                   <Route path="/create-post" element={<CreatePost />} />
-                                  <Route path="/update-post/:id" element={<UpdatePost />} />
+                                  <Route path="/update-post/:id" element={<UpdatePostPage />} />
                                   <Route path="*" element={<NotFound />} />
                               </Route>
                           ) :
