@@ -9,7 +9,7 @@ const HeaderProfileComponent:React.FC = () => {
         require('../img/login.png')
     return (
         <div className="group relative w-36">
-            <img src={imgSrc} className="w-16 h-16 ml-20 rounded-full" />
+            <img src={imgSrc} className="w-16 h-16 ml-20 rounded-full object-cover" />
             <ProfileMenu />
         </div>
     )

@@ -98,7 +98,7 @@ const PostPage:React.FC = () => {
                             </Modal>
                             <div className="bg-neutral-100 rounded-3xl border-gray-200 border-4 p-7 my-14">
                                 <div className="flex flex-col space-y-14">
-                                    <img className="w-96 h-96" src={postData?.image ? 'http://test-blog-api.ficuslife.com' + postData.image : require('../img/noimage.png')} />
+                                    <img className="w-96" src={postData?.image ? 'http://test-blog-api.ficuslife.com' + postData.image : require('../img/noimage.png')} />
                                     <div className="flex flex-col justify-between break-words space-y-4">
                                         {postData?.title && <span className="font-bold font-sans text-3xl break-words">{postData.title}</span>}
                                         {postData?.fullText && <span className="font-sans font-normal text-xl break-words">{postData.fullText}</span>}

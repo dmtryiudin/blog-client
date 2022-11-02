@@ -87,7 +87,7 @@ const CommentComponent:React.FC<CommentComponentProps> = (props) => {
                 }
                 <div className="flex items-center justify-between">
                     <div className="flex items-center">
-                        <img src={commentedBy?.avatar ? ('http://test-blog-api.ficuslife.com' + commentedBy.avatar) : require('../img/unknown.jpg')} className="w-16 h-16 rounded-full hidden sm:block"/>
+                        <img src={commentedBy?.avatar ? ('http://test-blog-api.ficuslife.com' + commentedBy.avatar) : require('../img/unknown.jpg')} className="w-16 h-16 rounded-full hidden sm:block object-cover"/>
                         <a href={'/profile/' + commentedBy?._id}>
                             <h3 className="font-sans font-bold text-2xl ml-0 sm:ml-4">{commentedBy?.name}</h3>
                         </a>

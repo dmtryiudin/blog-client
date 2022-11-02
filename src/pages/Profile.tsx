@@ -40,7 +40,7 @@ const Profile:React.FC = () => {
                    <div className="bg-neutral-100 rounded-3xl w-full mx-auto border-gray-200 border-4 p-7 my-14 flex flex-col space-y-3">
                        <img
                            src={userData?.avatar ? ('http://test-blog-api.ficuslife.com' + userData?.avatar) : require('../img/unknown.jpg')}
-                           className="w-48 h-48"
+                           className="w-48 h-48 object-cover"
                        />
                        {authData.fetchUserData!._id === id && <LocationComponent />}
                        {userData?.email && <span className="text-xl font-sans font-semibold">Email: {userData?.email}</span>}
