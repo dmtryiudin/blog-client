@@ -5,23 +5,22 @@ export interface AuthData {
     password: string
 }
 
-export interface AuthRes{
+export interface AuthResult{
     error: boolean
     data: User | string
 }
 
-export interface UserFetchResponse{
-    data: {
-        token:string,
-    }
+export interface AuthResponse {
+    token: string,
+    userData: User
 }
 
 export interface SignUpData {
-    email: string,
-    password: string,
-    name: string,
-    extra_details: string,
-    skills: string,
-    profession: string,
-    details: string
+    email: string;
+    password: string;
+    name: string;
+    extra_details: string;
+    skills: string;
+    profession: string;
+    details: string;
 }

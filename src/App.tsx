@@ -14,7 +14,6 @@ import {auth} from "./utils/auth";
 import ErrorBoundary from "./components/ErrorBoundary";
 import {useTypedSelector} from "./hooks/useTypedSelector";
 import {AuthState} from "./types/storeTypes";
-import LocationComponent from './components/LocationComponent'
 
 const App:React.FC = () => {
     const authData:AuthState = useTypedSelector(state => state.auth)
