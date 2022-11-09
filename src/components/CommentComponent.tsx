@@ -63,7 +63,6 @@ const CommentComponent:React.FC<CommentComponentProps> = (props) => {
 
     return (
         <>
-            {props.id}
             <Modal>
                 <EditComment
                     isShow={showModal}
