@@ -18,7 +18,7 @@ const UpdatePostPage:React.FC = () => {
 
     useEffect(()=>{
         if(id !== undefined){
-            posts.getPostById(id)
+            posts.getPostWithComments(id)
                 .then((e)=>{
                     const postData = {
                         title: e.title,

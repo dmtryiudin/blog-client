@@ -1,7 +1,8 @@
 import axios, {AxiosError} from "axios";
-import {UpdatePost, PostRes, PostsList} from "../types/postsTypes";
+import {UpdatePost, PostRes, PostsList, PostWithComments} from "../types/postsTypes";
 import {Post} from "../types/fetchSchemas";
 import {AuthHeader} from "../types/commonTypes";
+import {URL_BFF} from "./getSetUser";
 
 export const URL:string = 'http://test-blog-api.ficuslife.com/api/v1'
 let token: string | null = localStorage.getItem('token')
@@ -11,30 +12,21 @@ if(token){
 }
 
 export const posts = {
-    async getPostsForUser(id:string):Promise<PostsList>{
-        try{
-            return (await axios.get(`${URL}/posts?postedBy=${id}`)).data
-        }
-        catch (err: AxiosError | any){
-            throw err
-        }
-
-    },
     async getPostsWithPagination(skip:number, filter:string):Promise<PostsList>{
         try{
             if(filter){
-                return (await axios.get(`${URL}/posts?skip=${skip}&search=${filter}`)).data
+                return (await axios.get(`${URL_BFF}/posts?skip=${skip}&search=${filter}`)).data
             }
-            return (await axios.get(`${URL}/posts?skip=${skip}`)).data
+            return (await axios.get(`${URL_BFF}/posts?skip=${skip}`)).data
         }
         catch (err:AxiosError | any){
             return err
         }
     },
 
-    async getPostById(id:string):Promise<Post>{
+    async getPostWithComments(id:string):Promise<PostWithComments>{
         try{
-            return (await axios.get(`${URL}/posts/${id}`)).data
+            return (await axios.get(`${URL_BFF}/posts/${id}`)).data
         }
         catch (err){
             throw err
@@ -43,12 +35,12 @@ export const posts = {
     async updateImg(id:string | undefined, avatar:FileList):Promise<PostRes>{
         try{
             const config:AuthHeader = {
-                headers: { Authorization: `Bearer ${token}` },
+                headers: { Authorization: `${token}` },
             };
             let formData:FormData = new FormData()
             formData.append('image', avatar[0])
 
-            const fetchData:Post = (await axios.put(`${URL}/posts/upload/${id}`, formData, config)).data
+            const fetchData:Post = (await axios.patch(`${URL_BFF}/posts/image/${id}`, formData, config)).data
             return {
                 error: false,
                 data: fetchData
@@ -66,10 +58,10 @@ export const posts = {
     async createPost(data:UpdatePost):Promise<PostRes>{
         try{
             const config:AuthHeader = {
-                headers: { Authorization: `Bearer ${token}` },
+                headers: { Authorization: `${token}` },
             };
 
-            const fetchData:Post = (await axios.post(`${URL}/posts`, data, config)).data
+            const fetchData:Post = (await axios.post(`${URL_BFF}/posts`, data, config)).data
             return {
                 error: false,
                 data: fetchData
@@ -86,10 +78,10 @@ export const posts = {
     async updatePost(id:string | undefined, data:UpdatePost):Promise<PostRes>{
         try {
             const config:AuthHeader = {
-                headers: { Authorization: `Bearer ${token}` },
+                headers: { Authorization: `${token}` },
             };
 
-            const fetchData:Post = (await axios.patch(`${URL}/posts/${id}`, data, config)).data
+            const fetchData:Post = (await axios.patch(`${URL_BFF}/posts/${id}`, data, config)).data
             return {
                 error: false,
                 data: fetchData
@@ -106,10 +98,10 @@ export const posts = {
     async deletePost(id:string | undefined):Promise<void>{
         try {
             const config:AuthHeader = {
-                headers: { Authorization: `Bearer ${token}` },
+                headers: { Authorization: `${token}` },
             };
 
-            await axios.delete(`${URL}/posts/${id}`, config)
+            await axios.delete(`${URL_BFF}/posts/${id}`, config)
         }
         catch (err:AxiosError | any){
             return err
@@ -119,10 +111,10 @@ export const posts = {
     async addLike(postId:string):Promise<void>{
         try {
             const config:AuthHeader = {
-                headers: { Authorization: `Bearer ${token}` },
+                headers: { Authorization: `${token}` },
             };
 
-            await axios.put(`${URL}/posts/like/${postId}`, {}, config)
+            await axios.put(`${URL_BFF}/posts/like/${postId}`, {}, config)
         }
         catch (err:AxiosError | any){
             return err

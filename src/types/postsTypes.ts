@@ -1,4 +1,5 @@
 import {Post} from "./fetchSchemas";
+import {Comment} from "./fetchSchemas";
 
 export interface PostsList {
     pagination: {
@@ -19,4 +20,16 @@ export interface UpdatePost{
     title: string,
     fullText: string,
     description: string
+}
+
+export interface PostWithComments {
+    _id: string,
+    title: string,
+    fullText: string,
+    description: string,
+    dateCreated: string,
+    image: string,
+    likes: Array<string>,
+    postedBy: string,
+    comments: Array<Comment>
 }

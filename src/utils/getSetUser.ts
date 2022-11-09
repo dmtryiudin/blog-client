@@ -2,7 +2,7 @@ import axios, {AxiosError} from "axios";
 import {auth} from "./auth";
 import {AuthHeader} from "../types/commonTypes";
 import {User} from "../types/fetchSchemas";
-import {UpdateUserData, UsersList} from "../types/getSetUser";
+import {UpdateUserData, UsersList, UserWithPosts} from "../types/getSetUser";
 
 export const URL:string = 'http://test-blog-api.ficuslife.com/api/v1'
 export const URL_BFF: string = 'http://localhost:3001'
@@ -59,9 +59,9 @@ export const getSetUser = {
         }
     },
 
-    async getUserByIdWithPosts(id:string):Promise<User>{
+    async getUserByIdWithPosts(id:string):Promise<UserWithPosts>{
         try {
-            const fetchData:User = (await axios.get(`${URL_BFF}/users/${id}`)).data
+            const fetchData:UserWithPosts = (await axios.get(`${URL_BFF}/users/${id}`)).data
             return fetchData
         }
         catch (err){

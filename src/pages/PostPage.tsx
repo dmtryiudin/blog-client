@@ -27,14 +27,15 @@ const PostPage:React.FC = () => {
 
     useEffect(()=>{
        updateData()
-        updateComments()
     }, [])
 
     function updateData():void{
         if (id !== undefined){
-            posts.getPostById(id)
+            posts.getPostWithComments(id)
                 .then((e)=>{
+                    console.log(e)
                     setPostData(e)
+                    setCommentsList(e.comments)
                     if(e?.likes.indexOf(state.fetchUserData!._id) >= 0){
                         setIsLiked(true)
                     }
@@ -50,15 +51,6 @@ const PostPage:React.FC = () => {
                                 setAuthorData(e)
                             })
                     }
-                })
-        }
-    }
-
-    function updateComments():void{
-        if(id !== undefined){
-            comments.getCommentsForPost(id)
-                .then(e=>{
-                    setCommentsList(e)
                 })
         }
     }
@@ -85,7 +77,7 @@ const PostPage:React.FC = () => {
                             {
                                 showModal && (
                                     <Modal>
-                                        <EditComment isShow={showModal} setIsShow={setShowModal} updateComments={updateComments} id={id} mode="create"/>
+                                        <EditComment isShow={showModal} setIsShow={setShowModal} updateComments={updateData} id={id} mode="create"/>
                                     </Modal>
                                 )
                             }
@@ -156,7 +148,7 @@ const PostPage:React.FC = () => {
                                 >
                                     Add comment
                                 </button>
-                                <CommentsList commentsList={commentsList} updateComments={updateComments} postId={id}/>
+                                <CommentsList commentsList={commentsList} updateComments={updateData} postId={id}/>
                             </div>
                         </> : <Loader />
                     }
