@@ -11,7 +11,7 @@ const FollowedComment:React.FC<FollowedCommentProps> = ({comment}) => {
     const [authorData, setAuthorData] = useState<User | null>(null)
 
     useEffect(()=>{
-        getSetUser.getUserById(commentedBy)
+        getSetUser.getUserByIdWithPosts(commentedBy)
             .then(e=>{
                 setAuthorData(e)
             })

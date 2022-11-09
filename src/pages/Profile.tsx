@@ -20,7 +20,7 @@ const Profile:React.FC = () => {
 
     useEffect(()=>{
         if(id !== undefined){
-            getSetUser.getUserById(id).then((res)=>{
+            getSetUser.getUserByIdWithPosts(id).then((res)=>{
                 setUserData(res)
             }).catch(error=>{
                 setErrorData(true)

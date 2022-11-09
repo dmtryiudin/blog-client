@@ -30,7 +30,7 @@ const CommentComponent:React.FC<CommentComponentProps> = (props) => {
     const authData = useTypedSelector(state => state.auth)
 
     useEffect(()=>{
-        getSetUser.getUserById(props.commentedBy)
+        getSetUser.getUserByIdWithPosts(props.commentedBy)
             .then(e=>{
                 setCommentedBy(e)
             })

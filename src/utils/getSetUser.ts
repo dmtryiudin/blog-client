@@ -5,6 +5,7 @@ import {User} from "../types/fetchSchemas";
 import {UpdateUserData, UsersList} from "../types/getSetUser";
 
 export const URL:string = 'http://test-blog-api.ficuslife.com/api/v1'
+export const URL_BFF: string = 'http://localhost:3001'
 let token: string | null = localStorage.getItem('token')
 
 if(token){
@@ -16,9 +17,9 @@ export const getSetUser = {
     async deleteUser(id:string): Promise<void>{
         try{
             const config : AuthHeader = {
-                headers: { Authorization: `Bearer ${token}` }
+                headers: { Authorization: `${token}` }
             };
-            await axios.delete(`${URL}/users/${id}`, config);
+            await axios.delete(`${URL_BFF}/users/${id}`, config);
 
             auth.logout()
         }
@@ -31,12 +32,12 @@ export const getSetUser = {
 
         try{
             const config:AuthHeader = {
-                headers: { Authorization: `Bearer ${token}` },
+                headers: { Authorization: `${token}` },
             };
             let formData:FormData = new FormData()
             formData.append('avatar', avatar[0])
 
-            await axios.put( `${URL}/users/upload/${id}`, formData, config)
+            await axios.patch( `${URL_BFF}/users/avatar/` + id, formData, config)
 
         }
         catch (err:AxiosError | any){
@@ -47,10 +48,10 @@ export const getSetUser = {
     async updateUserData(id:string, data:UpdateUserData):Promise<void>{
         try {
             const config:AuthHeader = {
-                headers: { Authorization: `Bearer ${token}` },
+                headers: { Authorization: `${token}` },
             };
 
-            await axios.patch(`${URL}/users/${id}`, data, config)
+            await axios.patch(`${URL_BFF}/users/${id}`, data, config)
         }
 
         catch (err:AxiosError|any){
@@ -58,9 +59,9 @@ export const getSetUser = {
         }
     },
 
-    async getUserById(id:string):Promise<User>{
+    async getUserByIdWithPosts(id:string):Promise<User>{
         try {
-            const fetchData:User = (await axios.get(`${URL}/users/${id}`)).data
+            const fetchData:User = (await axios.get(`${URL_BFF}/users/${id}`)).data
             return fetchData
         }
         catch (err){
@@ -68,9 +69,12 @@ export const getSetUser = {
         }
     },
 
-    async getAllUsers():Promise<UsersList>{
+    async getAllUsers(substr?: string):Promise<User[]>{
         try {
-            return (await axios.get(`${URL}/users/?limit=999999999999999999999999999`)).data
+            if(substr?.trim()){
+                return (await axios.get(`${URL_BFF}/users/?substr=${substr}`)).data
+            }
+            return (await axios.get(`${URL_BFF}/users/`)).data
         }
         catch (err : AxiosError | any){
             return err

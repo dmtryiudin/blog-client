@@ -45,7 +45,7 @@ const PostPage:React.FC = () => {
                 })
                 .then((e)=>{
                     if(e?.postedBy){
-                        getSetUser.getUserById(e?.postedBy)
+                        getSetUser.getUserByIdWithPosts(e?.postedBy)
                             .then(e=>{
                                 setAuthorData(e)
                             })
