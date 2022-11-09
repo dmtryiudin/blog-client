@@ -3,7 +3,8 @@ import {Comment} from "../types/fetchSchemas";
 import {AuthHeader} from "../types/commonTypes";
 import {CommentRes} from "../types/commentsTypes";
 
-export const URL:string = 'http://test-blog-api.ficuslife.com/api/v1'
+const URL:string = 'http://test-blog-api.ficuslife.com/api/v1'
+const URL_BFF:string = 'http://localhost:3001'
 let token: string | null = localStorage.getItem('token')
 
 if (token){
@@ -11,26 +12,17 @@ if (token){
 }
 
 export const comments = {
-    async getCommentsForPost(id:string):Promise<Comment[]>{
-        try{
-            return (await axios.get(`${URL}/comments/post/${id}`)).data
-        }
-        catch (err: AxiosError | any){
-            return err
-        }
-    },
-
     async addComment(id:string | undefined, commentText:string):Promise<CommentRes>{
         try{
             const config:AuthHeader = {
-                headers: { Authorization: `Bearer ${token}` },
+                headers: { Authorization: `${token}` },
             };
 
             const data = {
                 text: commentText
             }
 
-            const fetchData:Comment = (await axios.post(`${URL}/comments/post/${id}`, data, config)).data
+            const fetchData:Comment = (await axios.post(`${URL_BFF}/comments/${id}`, data, config)).data
             return {
                 error: false,
                 data: fetchData
@@ -47,10 +39,10 @@ export const comments = {
     async deleteComment(id:string | undefined): Promise<void>{
         try{
             const config:AuthHeader = {
-                headers: { Authorization: `Bearer ${token}` },
+                headers: { Authorization: `${token}` },
             };
 
-            await axios.delete(`${URL}/comments/${id}`, config)
+            await axios.delete(`${URL_BFF}/comments/${id}`, config)
         }
         catch (err:AxiosError | any){
             return err
@@ -60,7 +52,7 @@ export const comments = {
     async replyToComment(postId:string | undefined, followedComment:string | undefined, commentText:string):Promise<CommentRes>{
         try{
             const config:AuthHeader = {
-                headers: { Authorization: `Bearer ${token}` },
+                headers: { Authorization: `${token}` },
             };
 
             const data = {
@@ -68,7 +60,7 @@ export const comments = {
                 followedCommentID: followedComment
             }
 
-            const fetchData:Comment = (await axios.post(`${URL}/comments/post/${postId}`, data, config)).data
+            const fetchData:Comment = (await axios.post(`${URL_BFF}/comments/${postId}`, data, config)).data
 
             return {
                 error: false,
@@ -86,14 +78,14 @@ export const comments = {
     async editComment(id:string | undefined, text:string):Promise<CommentRes>{
         try{
             const config:AuthHeader = {
-                headers: { Authorization: `Bearer ${token}` },
+                headers: { Authorization: `${token}` },
             };
 
             const data = {
                 text: text
             }
 
-            const fetchData:Comment = (await axios.patch(`${URL}/comments/${id}`, data, config)).data
+            const fetchData:Comment = (await axios.patch(`${URL_BFF}/comments/${id}`, data, config)).data
 
             return {
                 error: false,
@@ -111,10 +103,10 @@ export const comments = {
     async setLike(id:string | undefined):Promise<void>{
         try {
             const config:AuthHeader = {
-                headers: { Authorization: `Bearer ${token}` },
+                headers: { Authorization: `${token}` },
             };
 
-            await axios.put(`${URL}/comments/like/${id}`, {}, config)
+            await axios.put(`${URL_BFF}/comments/like/${id}`, {}, config)
         }
         catch (err:AxiosError | any){
             return err

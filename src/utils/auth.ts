@@ -3,12 +3,12 @@ import {AuthResult, AuthData, AuthResponse, SignUpData} from '../types/authTypes
 import {User} from "../types/fetchSchemas";
 import {AuthHeader} from "../types/commonTypes";
 
-const URL:string = 'http://localhost:3001'
+const URL_BFF: string = 'http://localhost:3001'
 
 export const auth = {
     async login(authData:AuthData):Promise<AuthResult>{
         try {
-            const request:AuthResponse = (await axios.post(URL+ '/auth', authData)).data
+            const request:AuthResponse = (await axios.post(URL_BFF+ '/auth', authData)).data
             const token:string = request.token
 
             localStorage.removeItem('token')
@@ -41,7 +41,7 @@ export const auth = {
                 headers: { Authorization: `${token}` }
             };
 
-            const userFetchData:User = (await axios.get(URL + `/auth`, config)).data
+            const userFetchData:User = (await axios.get(URL_BFF + `/auth`, config)).data
             return {
                 error:false,
                 data: userFetchData
@@ -60,7 +60,7 @@ export const auth = {
 
     async signUp(signUpData:SignUpData):Promise<AuthResult>{
         try{
-            const response:User = (await axios.post(URL + `/users`, signUpData)).data
+            const response:User = (await axios.post(URL_BFF + `/users`, signUpData)).data
 
             return {
                 error:false,

@@ -2,10 +2,9 @@ import axios, {AxiosError} from "axios";
 import {auth} from "./auth";
 import {AuthHeader} from "../types/commonTypes";
 import {User} from "../types/fetchSchemas";
-import {UpdateUserData, UsersList, UserWithPosts} from "../types/getSetUser";
+import {UpdateUserData, UserWithPosts} from "../types/getSetUser";
 
-export const URL:string = 'http://test-blog-api.ficuslife.com/api/v1'
-export const URL_BFF: string = 'http://localhost:3001'
+const URL_BFF: string = 'http://localhost:3001'
 let token: string | null = localStorage.getItem('token')
 
 if(token){
