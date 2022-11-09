@@ -10,12 +10,12 @@ interface GetLocationParams{
 }
 
 export const getLocation = async function(ip:string):Promise<GetLocationParams>{
-    const URL = `http://ip-api.com/json/${ip}`
+    const URL_BFF:string = 'http://localhost:3001'
 
-    const {lat, lon} = (await axios.get(URL)).data
+    const {lat, lon} = (await axios.get(`${URL_BFF}/location?ip=${ip}`)).data
 
     return {
-        lat: +lat,
-        lon: +lon,
+        lat: lat,
+        lon: lon,
     }
 }

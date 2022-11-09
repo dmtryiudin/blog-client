@@ -3,7 +3,6 @@ import {Comment} from "../types/fetchSchemas";
 import {AuthHeader} from "../types/commonTypes";
 import {CommentRes} from "../types/commentsTypes";
 
-const URL:string = 'http://test-blog-api.ficuslife.com/api/v1'
 const URL_BFF:string = 'http://localhost:3001'
 let token: string | null = localStorage.getItem('token')
 
