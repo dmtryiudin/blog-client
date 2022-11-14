@@ -3,6 +3,10 @@ import {AuthResult, AuthData, AuthResponse, SignUpData} from '../types/authTypes
 import {User} from "../types/fetchSchemas";
 import {AuthHeader} from "../types/commonTypes";
 
+if(process.env.NODE_ENV === 'test') {
+    require('localstorage-polyfill');
+}
+
 const URL_BFF: string = 'http://localhost:3001'
 
 export const auth = {
