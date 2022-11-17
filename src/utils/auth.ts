@@ -29,7 +29,7 @@ export const auth = {
             localStorage.removeItem('token')
             return {
                 error:true,
-                data:err.response.data.error[0].message || err.response.data.error
+                data:err?.response?.data?.error[0].message || err?.response?.data?.error
             }
         }
     },
@@ -57,7 +57,7 @@ export const auth = {
 
             return {
                 error:true,
-                data:err.response.data.error[0].message || err.response.data.error
+                data:err?.response?.data?.error[0].message || err?.response?.data?.error
             }
         }
     },
@@ -75,7 +75,7 @@ export const auth = {
         catch (err:AxiosError | any){
             return {
                 error:true,
-                data: err.response.data.error[0].message || err.response.data.error
+                data: err?.response?.data?.error[0].message || err?.response?.data?.error
             }
         }
     },

@@ -11,7 +11,8 @@ const PostPreview:React.FC<PostPreviewProps> = (props) => {
         return str.length > 15 ? str.slice(0, 15)+'...' : str
     }
     return (
-        <a href={"/post/" + props.id}>
+        <a href={"/post/" + props.id}
+        data-testid="post-preview">
             <div className="p-8 sm:w-96 w-64 bg-neutral-100 rounded-2xl border-gray-200 border-4">
                 <img
                     src={props.img ? ("http://test-blog-api.ficuslife.com" + props.img) : require('../img/noimage.png')}

@@ -31,7 +31,7 @@ export const getSetUser = {
         }
     },
 
-    async updateAvatar(id:string, avatar:FileList):Promise<void>{
+    async updateAvatar(id:string, avatar:FileList | any):Promise<void>{
 
         try{
             const config:AuthHeader = {

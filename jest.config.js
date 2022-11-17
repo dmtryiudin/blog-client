@@ -20,4 +20,7 @@ module.exports = {
     ],
     testEnvironment: 'jsdom',
     setupFilesAfterEnv: [ "<rootDir>/src/setupTests.js" ],
+    setupFiles: [
+        "./__mocks__/client.js"
+    ],
 };

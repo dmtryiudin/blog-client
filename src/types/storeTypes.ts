@@ -20,15 +20,15 @@ export interface AuthState {
 }
 
 export interface FetchUserData{
-    _id: "",
-    email: "",
-    name: "",
-    avatar: "",
-    extra_details: "",
-    skills: "",
-    profession: "",
-    details: "",
-    dateCreated: ""
+    _id: string,
+    email: string,
+    name: string,
+    avatar: string,
+    extra_details: string,
+    skills: string,
+    profession: string,
+    details: string,
+    dateCreated: string
 }
 
 export interface LoginAction{

@@ -1,7 +1,8 @@
 import {screen, render} from '@testing-library/react'
-import ErrorMessage from "../src/components/ErrorMessage";
+import ErrorMessage from "../components/ErrorMessage";
+import React from 'react'
 
-describe('ErrorMessage test', ()=>{
+describe('ErrorMessage component test', ()=>{
     test('Text exists', ()=>{
         render(<ErrorMessage message={'new error'} />)
 

@@ -35,7 +35,7 @@ export const posts = {
             throw err
         }
     },
-    async updateImg(id:string | undefined, avatar:FileList):Promise<PostRes>{
+    async updateImg(id:string | undefined, avatar:FileList | any):Promise<PostRes>{
         try{
             const config:AuthHeader = {
                 headers: { Authorization: `${token}` },
@@ -73,7 +73,7 @@ export const posts = {
         catch (err:AxiosError | any){
             return {
                 error: true,
-                data: err.response.data.error[0].message || err.response.data.error
+                data: err?.response?.data?.error[0].message || err?.response?.data?.error
             }
         }
 

@@ -1,11 +1,12 @@
 import {screen, render} from '@testing-library/react'
-import FollowedComment from "../src/components/FollowedComment";
-import {getSetUser} from "../src/utils/getSetUser";
-import {Post} from "../src/types/fetchSchemas";
-import {UserWithPosts} from "../src/types/getSetUser";
+import FollowedComment from "../components/FollowedComment";
+import {getSetUser} from "../utils/getSetUser";
+import {UserWithPosts} from "../types/getSetUser";
+import clearAllMocks = jest.clearAllMocks;
+import React from 'react'
 
-jest.mock('../src/utils/getSetUser')
-const mockedGetSetUser = jest.mocked(getSetUser, {shallow: true})
+jest.mock('../utils/getSetUser')
+const mockedGetSetUser = jest.mocked(getSetUser)
 
 const testComment = {
     likes:	[],
@@ -17,12 +18,23 @@ const testComment = {
     postID: "612cb4af902cf330b086a365",
 }
 
-describe('FollowedComment test', ()=>{
+const commentWithoutUser = {
+    likes:	[],
+    _id: "612f99dbc46d5405b355d8de",
+    text: "and this is my first comment",
+    followedCommentID: "",
+    dateCreated: "2021-09-01T15:18:51.859Z",
+    commentedBy: "",
+    postID: "612cb4af902cf330b086a365",
+}
 
-    let response: Promise<UserWithPosts>;
+describe('FollowedComment component test', ()=>{
+
+    let normalUser: Promise<UserWithPosts>;
+    let deletedUser: Promise<UserWithPosts>
 
     beforeEach(()=>{
-        const p:Promise<UserWithPosts> = new Promise((res, rej)=>{
+        const p1:Promise<UserWithPosts> = new Promise((res, rej)=>{
             res({
                 _id: "1",
                 email: "mail@test.com",
@@ -36,16 +48,46 @@ describe('FollowedComment test', ()=>{
                 posts: []
             })
         })
-        response = p
+
+        const p2:Promise<UserWithPosts> = new Promise((res, rej)=>{
+            res({
+                _id: "",
+                email: "",
+                name: "",
+                avatar:	"",
+                extra_details: "",
+                skills:	"",
+                profession:	"",
+                details: "",
+                dateCreated: "",
+                posts: []
+            })
+        })
+
+        normalUser = p1
+        deletedUser = p2
     })
 
-    test('Normal usage', async ()=>{
-        mockedGetSetUser.getUserByIdWithPosts.mockReturnValue(response)
+    test('Component works with no error', async ()=>{
+        mockedGetSetUser.getUserByIdWithPosts.mockReturnValue(normalUser)
         render(<FollowedComment comment={testComment} />)
 
         expect(mockedGetSetUser.getUserByIdWithPosts).toBeCalledTimes(1)
         expect(await screen.findByRole('img')).toBeInTheDocument()
         expect(await screen.findByText("and this is my first comment")).toBeInTheDocument()
         expect(await screen.findByText("John")).toBeInTheDocument()
+    })
+
+    test('Component works with deleted user', async ()=>{
+        mockedGetSetUser.getUserByIdWithPosts.mockReturnValue(deletedUser)
+        render(<FollowedComment comment={commentWithoutUser} />)
+
+        expect(mockedGetSetUser.getUserByIdWithPosts).toBeCalledTimes(1)
+        expect(await screen.findByRole('img')).toBeInTheDocument()
+        expect(await screen.findByText("and this is my first comment")).toBeInTheDocument()
+    })
+
+    afterEach(()=>{
+        clearAllMocks()
     })
 })
