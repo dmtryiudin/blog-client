@@ -9,11 +9,12 @@ import ProfileSettings from "./pages/ProfileSettings";
 import PostPage from "./pages/PostPage";
 import CreatePost from "./pages/CreatePost";
 import UpdatePostPage from "./pages/UpdatePostPage";
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {auth} from "./utils/auth";
 import ErrorBoundary from "./components/ErrorBoundary";
 import {useTypedSelector} from "./hooks/useTypedSelector";
 import {AuthState} from "./types/storeTypes";
+import InputComponent from "./components/InputComponent";
 
 const App:React.FC = () => {
     const authData:AuthState = useTypedSelector(state => state.auth)

@@ -3,6 +3,10 @@ import {AuthResult, AuthData, AuthResponse, SignUpData} from '../types/authTypes
 import {User} from "../types/fetchSchemas";
 import {AuthHeader} from "../types/commonTypes";
 
+if(process.env.NODE_ENV === 'test') {
+    require('localstorage-polyfill');
+}
+
 const URL_BFF: string = 'http://localhost:3001'
 
 export const auth = {
@@ -25,7 +29,7 @@ export const auth = {
             localStorage.removeItem('token')
             return {
                 error:true,
-                data:err.response.data.error[0].message || err.response.data.error
+                data:err?.response?.data?.error[0].message || err?.response?.data?.error
             }
         }
     },
@@ -53,7 +57,7 @@ export const auth = {
 
             return {
                 error:true,
-                data:err.response.data.error[0].message || err.response.data.error
+                data:err?.response?.data?.error[0].message || err?.response?.data?.error
             }
         }
     },
@@ -71,7 +75,7 @@ export const auth = {
         catch (err:AxiosError | any){
             return {
                 error:true,
-                data: err.response.data.error[0].message || err.response.data.error
+                data: err?.response?.data?.error[0].message || err?.response?.data?.error
             }
         }
     },

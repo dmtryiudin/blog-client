@@ -6,7 +6,7 @@ interface ErrorMessageProps {
 
 const ErrorMessage:React.FC<ErrorMessageProps> = (props) => {
     return (
-        <div className="mt-3 font-sans font-semibold text-red-500 text-lg max-w-full">Error! {props.message}</div>
+        <div data-testid="error-message" className="mt-3 font-sans font-semibold text-red-500 text-lg max-w-full">Error! {props.message}</div>
     )
 }
 

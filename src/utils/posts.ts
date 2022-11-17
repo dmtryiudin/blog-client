@@ -3,6 +3,10 @@ import {UpdatePost, PostRes, PostsList, PostWithComments} from "../types/postsTy
 import {Post} from "../types/fetchSchemas";
 import {AuthHeader} from "../types/commonTypes";
 
+if(process.env.NODE_ENV === 'test') {
+    require('localstorage-polyfill');
+}
+
 const URL_BFF: string = 'http://localhost:3001'
 let token: string | null = localStorage.getItem('token')
 
@@ -31,7 +35,7 @@ export const posts = {
             throw err
         }
     },
-    async updateImg(id:string | undefined, avatar:FileList):Promise<PostRes>{
+    async updateImg(id:string | undefined, avatar:FileList | any):Promise<PostRes>{
         try{
             const config:AuthHeader = {
                 headers: { Authorization: `${token}` },
@@ -69,7 +73,7 @@ export const posts = {
         catch (err:AxiosError | any){
             return {
                 error: true,
-                data: err.response.data.error[0].message || err.response.data.error
+                data: err?.response?.data?.error[0].message || err?.response?.data?.error
             }
         }
 

@@ -2,8 +2,7 @@ import {auth} from "../utils/auth";
 import React from "react";
 import {useTypedSelector} from "../hooks/useTypedSelector";
 
-
-const ProfileMenu:React.FC = (props) => {
+const ProfileMenu:React.FC = () => {
     const authData = useTypedSelector(state => state.auth)
 
     function logIn(){

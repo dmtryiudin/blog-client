@@ -9,6 +9,7 @@ interface InputComponentProps{
 const InputComponent:React.FC<InputComponentProps> = (props) => {
     return (
         <input
+            data-testid="input-component"
             onChange={props.changeHandler}
             value={props.inputValue}
             type={props.type}

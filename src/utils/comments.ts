@@ -3,6 +3,10 @@ import {Comment} from "../types/fetchSchemas";
 import {AuthHeader} from "../types/commonTypes";
 import {CommentRes} from "../types/commentsTypes";
 
+if(process.env.NODE_ENV === 'test') {
+    require('localstorage-polyfill');
+}
+
 const URL_BFF:string = 'http://localhost:3001'
 let token: string | null = localStorage.getItem('token')
 

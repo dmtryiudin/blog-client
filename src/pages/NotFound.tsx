@@ -10,8 +10,8 @@ const NotFound:React.FC = () => {
         text-3xl
         font-semibold
         uppercase
-
         "
+             data-testid="not-found"
              style={{transform: 'translate(-50%, -50%)'}}>
             404<br/>¯\_(^ ^)_/¯<br/>Not found
         </div>

@@ -4,6 +4,10 @@ import {AuthHeader} from "../types/commonTypes";
 import {User} from "../types/fetchSchemas";
 import {UpdateUserData, UserWithPosts} from "../types/getSetUser";
 
+if(process.env.NODE_ENV === 'test') {
+    require('localstorage-polyfill');
+}
+
 const URL_BFF: string = 'http://localhost:3001'
 let token: string | null = localStorage.getItem('token')
 
@@ -27,7 +31,7 @@ export const getSetUser = {
         }
     },
 
-    async updateAvatar(id:string, avatar:FileList):Promise<void>{
+    async updateAvatar(id:string, avatar:FileList | any):Promise<void>{
 
         try{
             const config:AuthHeader = {
